@@ -1,0 +1,13 @@
+plugin_repo:
+  type: resource
+  name: data/plugins.json
+
+preordered_plugins:
+  - security
+  - theme
+  - secrets
+  - artifacts
+  - backend_performance
+  - integrations
+  - security_scanner_qualys
+  - security_scanner_zap
