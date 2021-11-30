@@ -58,7 +58,7 @@ class Module(module.ModuleModel):
         #
         source_provider = importlib.import_module(
             "pylon.core.providers.source.git"
-        ).Provider(self.context, {"delete_git_dir": False})
+        ).Provider(self.context, {"delete_git_dir": False, "depth": None})
         source_provider.init()
         #
         while plugins_to_check:
