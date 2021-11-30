@@ -49,6 +49,8 @@ class Module(module.ModuleModel):
         plugins_to_check = self.descriptor.config["preordered_plugins"]
         known_plugins = set(plugins_to_check)
         #
+        plugins_provider = self.context.module_manager.providers["plugins"]
+        #
         metadata_provider = importlib.import_module(
             "pylon.core.providers.metadata.http"
         ).Provider(self.context, {})
@@ -56,45 +58,36 @@ class Module(module.ModuleModel):
         #
         source_provider = importlib.import_module(
             "pylon.core.providers.source.git"
-        ).Provider(self.context, {})
+        ).Provider(self.context, {"delete_git_dir": False})
         source_provider.init()
         #
         while plugins_to_check:
             plugin = plugins_to_check.pop(0)
             log.info("Preloading plugin: %s", plugin)
             #
-            if self.context.module_manager.providers["plugins"].plugin_exists(plugin):
+            if plugins_provider.plugin_exists(plugin):
                 log.info("Plugin %s already exists", plugin)
                 #
-                metadata = self.context.module_manager.providers["plugins"].get_plugin_metadata(
-                    plugin
-                )
-                for dependency in metadata.get("depends_on", list()):
-                    if dependency in known_plugins:
-                        continue
-                    #
-                    known_plugins.add(dependency)
-                    plugins_to_check.append(dependency)
+                metadata = plugins_provider.get_plugin_metadata(plugin)
+            else:
+                if plugin not in plugin_repo:
+                    log.error("Plugin %s is not known", plugin)
+                    continue
                 #
-                continue
+                metadata_url = plugin_repo[plugin]["objects"]["metadata"]
+                source_url = plugin_repo[plugin]["source"]["url"]
+                #
+                metadata = metadata_provider.get_metadata({"source": metadata_url})
+                #
+                source = source_provider.get_source({"source": source_url})
+                plugins_provider.add_plugin(plugin, source)
             #
-            if plugin not in plugin_repo:
-                log.error("Plugin %s is not known", plugin)
-                continue
-            #
-            metadata_url = plugin_repo[plugin]["objects"]["metadata"]
-            source_url = plugin_repo[plugin]["source"]["url"]
-            #
-            metadata = metadata_provider.get_metadata({"source": metadata_url})
             for dependency in metadata.get("depends_on", list()):
                 if dependency in known_plugins:
                     continue
                 #
                 known_plugins.add(dependency)
                 plugins_to_check.append(dependency)
-            #
-            source = source_provider.get_source({"source": source_url})
-            self.context.module_manager.providers["plugins"].add_plugin(plugin, source)
         #
         source_provider.deinit()
         metadata_provider.deinit()
