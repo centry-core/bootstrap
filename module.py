@@ -65,6 +65,17 @@ class Module(module.ModuleModel):
             #
             if self.context.module_manager.providers["plugins"].plugin_exists(plugin):
                 log.info("Plugin %s already exists", plugin)
+                #
+                metadata = self.context.module_manager.providers["plugins"].get_plugin_metadata(
+                    plugin
+                )
+                for dependency in metadata.get("depends_on", list()):
+                    if dependency in known_plugins:
+                        continue
+                    #
+                    known_plugins.add(dependency)
+                    plugins_to_check.append(dependency)
+                #
                 continue
             #
             if plugin not in plugin_repo:
