@@ -8,6 +8,15 @@
       "metadata": "https://raw.githubusercontent.com/carrier-io/market/main/metadata.json"
     }
   },
+  "design-system": {
+    "source": {
+      "type": "git",
+      "url": "https://github.com/carrier-io/design-system.git"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/design-system/main/metadata.json"
+    }
+  },
   "auth_root": {
     "source": {
       "type": "git",
