@@ -11,3 +11,6 @@ preordered_plugins:
   - integrations
   - security_scanner_qualys
   - security_scanner_zap
+  - processing_severity_filter
+  - reporter_email
+  - reporter_jira
