@@ -62,6 +62,15 @@
       "metadata": "https://raw.githubusercontent.com/carrier-io/auth_oidc/main/metadata.json"
     }
   },
+  "auth_saml": {
+    "source": {
+      "type": "git",
+      "url": "https://github.com/carrier-io/auth_saml.git"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/auth_saml/main/metadata.json"
+    }
+  },
   "projects": {
     "source": {
       "type": "git",
