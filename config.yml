@@ -15,3 +15,5 @@ preordered_plugins:
   - reporter_email
   - reporter_jira
   - scheduling
+  - auth_mappers
+  - auth_saml
