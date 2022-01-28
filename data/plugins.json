@@ -250,5 +250,14 @@
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/processing_severity_filter/main/metadata.json"
     }
+  },
+  "scheduling": {
+    "source": {
+      "type": "git",
+      "url": "https://github.com/carrier-io/scheduling.git"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/scheduling/main/metadata.json"
+    }
   }
 }

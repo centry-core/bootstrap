@@ -14,5 +14,6 @@ preordered_plugins:
   - processing_severity_filter
   - reporter_email
   - reporter_jira
+  - scheduling
   - auth_mappers
   - auth_saml
