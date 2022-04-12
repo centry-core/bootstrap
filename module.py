@@ -39,6 +39,8 @@ class Module(module.ModuleModel):
             plugin_repo = json.loads(
                 self.descriptor.loader.get_data(self.descriptor.config["plugin_repo"]["name"])
             )
+        elif self.descriptor.config["plugin_repo"]["type"] == "config":
+            plugin_repo = self.descriptor.config["plugin_repo"]["data"]
         else:
             plugin_repo = None
         #
