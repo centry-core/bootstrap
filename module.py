@@ -77,11 +77,16 @@ class Module(module.ModuleModel):
                     continue
                 #
                 metadata_url = plugin_repo[plugin]["objects"]["metadata"]
-                source_url = plugin_repo[plugin]["source"]["url"]
-                #
                 metadata = metadata_provider.get_metadata({"source": metadata_url})
                 #
-                source = source_provider.get_source({"source": source_url})
+                source_target = plugin_repo[plugin]["source"].copy()
+                source_type = source_target.pop("type")
+                #
+                if source_type != "git":
+                    log.error("Plugin %s source type %s is not supported", plugin, source_type)
+                    continue
+                #
+                source = source_provider.get_source(source_target)
                 plugins_provider.add_plugin(plugin, source)
             #
             for dependency in metadata.get("depends_on", list()):
