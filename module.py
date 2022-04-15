@@ -17,11 +17,12 @@
 
 """ Module """
 
-import json
 import importlib
 
 from pylon.core.tools import log  # pylint: disable=E0611,E0401
 from pylon.core.tools import module  # pylint: disable=E0611,E0401
+
+from .tools.repo import RepoResolver
 
 
 class Module(module.ModuleModel):
@@ -31,22 +32,12 @@ class Module(module.ModuleModel):
         self.context = context
         self.descriptor = descriptor
 
-    def init(self):
+    def init(self):  # pylint: disable=R0914
         """ Init module """
         log.info("Initializing module")
         #
-        if self.descriptor.config["plugin_repo"]["type"] == "resource":
-            plugin_repo = json.loads(
-                self.descriptor.loader.get_data(self.descriptor.config["plugin_repo"]["name"])
-            )
-        elif self.descriptor.config["plugin_repo"]["type"] == "config":
-            plugin_repo = self.descriptor.config["plugin_repo"]["data"]
-        else:
-            plugin_repo = None
-        #
-        if plugin_repo is None:
-            log.error("No plugin repo loaded!")
-            return
+        repo_resolver = RepoResolver(self, self.descriptor.config["plugin_repo"])
+        repo_resolver.init()
         #
         plugins_to_check = self.descriptor.config["preordered_plugins"]
         known_plugins = set(plugins_to_check)
@@ -72,14 +63,15 @@ class Module(module.ModuleModel):
                 #
                 metadata = plugins_provider.get_plugin_metadata(plugin)
             else:
-                if plugin not in plugin_repo:
+                plugin_info = repo_resolver.resolve(plugin)
+                if plugin_info is None:
                     log.error("Plugin %s is not known", plugin)
                     continue
                 #
-                metadata_url = plugin_repo[plugin]["objects"]["metadata"]
+                metadata_url = plugin_info["objects"]["metadata"]
                 metadata = metadata_provider.get_metadata({"source": metadata_url})
                 #
-                source_target = plugin_repo[plugin]["source"].copy()
+                source_target = plugin_info["source"].copy()
                 source_type = source_target.pop("type")
                 #
                 if source_type != "git":
@@ -98,6 +90,7 @@ class Module(module.ModuleModel):
         #
         source_provider.deinit()
         metadata_provider.deinit()
+        repo_resolver.deinit()
 
     def deinit(self):  # pylint: disable=R0201
         """ De-init module """
