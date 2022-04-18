@@ -44,6 +44,24 @@
       "metadata": "https://raw.githubusercontent.com/carrier-io/auth_project/main/metadata.json"
     }
   },
+  "auth_core": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/auth_core.git"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/auth_core/main/metadata.json"
+    }
+  },
+  "auth_init": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/auth_init.git"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/auth_init/main/metadata.json"
+    }
+  },
   "auth_mappers": {
     "source": {
       "type": "git",
