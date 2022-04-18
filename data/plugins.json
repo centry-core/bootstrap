@@ -17,6 +17,15 @@
       "metadata": "https://raw.githubusercontent.com/carrier-io/design-system/main/metadata.json"
     }
   },
+  "auth": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/auth.git"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/auth/main/metadata.json"
+    }
+  },
   "auth_root": {
     "source": {
       "type": "git",
