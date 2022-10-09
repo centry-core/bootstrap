@@ -17,8 +17,6 @@
 
 """ Module """
 
-import importlib
-
 from pylon.core.tools import log  # pylint: disable=E0611,E0401
 from pylon.core.tools import module  # pylint: disable=E0611,E0401
 
@@ -44,16 +42,6 @@ class Module(module.ModuleModel):
         #
         plugins_provider = self.context.module_manager.providers["plugins"]
         #
-        metadata_provider = importlib.import_module(
-            "pylon.core.providers.metadata.http"
-        ).Provider(self.context, {})
-        metadata_provider.init()
-        #
-        source_provider = importlib.import_module(
-            "pylon.core.providers.source.git"
-        ).Provider(self.context, {"delete_git_dir": False, "depth": None})
-        source_provider.init()
-        #
         while plugins_to_check:
             plugin = plugins_to_check.pop(0)
             log.info("Preloading plugin: %s", plugin)
@@ -68,6 +56,8 @@ class Module(module.ModuleModel):
                     log.error("Plugin %s is not known", plugin)
                     continue
                 #
+                metadata_provider = repo_resolver.get_metadata_provider(plugin)
+                #
                 metadata_url = plugin_info["objects"]["metadata"]
                 metadata = metadata_provider.get_metadata({"source": metadata_url})
                 #
@@ -77,6 +67,8 @@ class Module(module.ModuleModel):
                 if source_type != "git":
                     log.error("Plugin %s source type %s is not supported", plugin, source_type)
                     continue
+                #
+                source_provider = repo_resolver.get_source_provider(plugin)
                 #
                 source = source_provider.get_source(source_target)
                 plugins_provider.add_plugin(plugin, source)
@@ -88,8 +80,6 @@ class Module(module.ModuleModel):
                 known_plugins.add(dependency)
                 plugins_to_check.append(dependency)
         #
-        source_provider.deinit()
-        metadata_provider.deinit()
         repo_resolver.deinit()
 
     def deinit(self):  # pylint: disable=R0201

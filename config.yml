@@ -1,6 +1,12 @@
 plugin_repo:
   type: resource
   name: data/plugins.json
+  metadata_provider:
+    type: pylon.core.providers.metadata.http
+  source_provider:
+    type: pylon.core.providers.source.git
+    delete_git_dir: false
+    depth: null
 
 preordered_plugins:
   - security
