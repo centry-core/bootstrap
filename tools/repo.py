@@ -55,7 +55,7 @@ class RepoResolver:
             self.plugin_repo = self.repo_config["data"]
         #
         elif self.repo_config["type"] == "config_key":
-            config_key = self.repo_config["data"]
+            config_key = self.repo_config["name"]
             if config_key not in self.module.descriptor.config:
                 return
             log.info("Loading plugin repository from config key")
