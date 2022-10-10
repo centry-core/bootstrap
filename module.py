@@ -37,9 +37,12 @@ class Module(module.ModuleModel):
         repo_resolver = RepoResolver(self, self.descriptor.config["plugin_repo"])
         repo_resolver.init()
         #
-        plugins_to_check = self.descriptor.config["preordered_plugins"]
-        known_plugins = set(plugins_to_check)
+        plugins_to_check = list()
+        plugins_to_check += self.descriptor.config.get("local_preordered_plugins", list())
+        plugins_to_check += self.descriptor.config.get("customer_preordered_plugins", list())
+        plugins_to_check += self.descriptor.config.get("preordered_plugins", list())
         #
+        known_plugins = set(plugins_to_check)
         plugins_provider = self.context.module_manager.providers["plugins"]
         #
         while plugins_to_check:
