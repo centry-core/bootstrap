@@ -9,16 +9,13 @@ plugin_repo:
     depth: null
 
 preordered_plugins:
-  - security
+  - auth
+  - admin
   - theme
+  - design-system
+  - shared
+  - projects
   - secrets
+  - tasks
   - artifacts
-  - backend_performance
-  - integrations
-  - security_scanner_qualys
-  - security_scanner_zap
-  - processing_severity_filter
-  - reporter_email
-  - reporter_jira
   - scheduling
-  - auth_mappers
