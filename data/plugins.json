@@ -330,5 +330,15 @@
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/tasklets/main/metadata.json"
     }
+  },
+  "aws_integration": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/aws_integration.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/aws_integration/main/metadata.json"
+    }
   }
 }
