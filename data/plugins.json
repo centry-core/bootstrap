@@ -275,10 +275,11 @@
   "reporter_jira": {
     "source": {
       "type": "git",
-      "source": "https://github.com/Aspect13/reporter_jira.git"
+      "source": "https://github.com/carrier-io/reporter_jira.git",
+      "branch": "next"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/Aspect13/reporter_jira/main/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/reporter_jira/next/metadata.json"
     }
   },
   "processing_severity_filter": {
