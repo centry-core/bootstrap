@@ -341,5 +341,15 @@
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/aws_integration/main/metadata.json"
     }
+  },
+  "azure_devops": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/azure_devops_integration.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/azure_devops_integration/main/metadata.json"
+    }
   }
 }
