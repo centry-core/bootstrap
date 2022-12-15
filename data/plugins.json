@@ -351,5 +351,15 @@
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/azure_devops_integration/main/metadata.json"
     }
+  },
+  "kubernetes": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/kubernetes.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/kubernetes/main/metadata.json"
+    }
   }
 }
