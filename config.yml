@@ -19,3 +19,4 @@ preordered_plugins:
   - tasks
   - artifacts
   - scheduling
+  - shared_orch

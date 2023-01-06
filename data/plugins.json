@@ -361,5 +361,66 @@
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/kubernetes/main/metadata.json"
     }
+  },
+  "shared_orch": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/shared_orch",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/shared_orch/main/metadata.json"
+    }
+  },
+  "engagements": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/engagements",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/engagements/main/metadata.json"
+    }
+  },
+  "kanban": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/kanban",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/kanban/main/metadata.json"
+    }
+  },
+  "issues": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/issues",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/issues/main/metadata.json"
+    }
+  },
+  "kb": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/kb",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/kb/main/metadata.json"
+    }
+  },
+  "reporter_engagement": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/reporter_engagement",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/reporter_engagement/main/metadata.json"
+    }
   }
+  
 }
