@@ -421,6 +421,15 @@
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/reporter_engagement/main/metadata.json"
     }
+  },
+  "performance_analysis": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/performance_analysis",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/performance_analysis/main/metadata.json"
+    }
   }
-  
 }
