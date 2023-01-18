@@ -75,7 +75,8 @@
   "auth_mappers": {
     "source": {
       "type": "git",
-      "source": "https://github.com/carrier-io/auth_mappers.git"
+      "source": "https://github.com/carrier-io/auth_mappers.git",
+      "branch": "next"
     },
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/auth_mappers/main/metadata.json"
@@ -84,7 +85,8 @@
   "auth_oidc": {
     "source": {
       "type": "git",
-      "source": "https://github.com/carrier-io/auth_oidc.git"
+      "source": "https://github.com/carrier-io/auth_oidc.git",
+      "branch": "next"
     },
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/auth_oidc/main/metadata.json"
