@@ -433,5 +433,15 @@
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/performance_analysis/main/metadata.json"
     }
+  },
+  "gcp_integration": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/gcp_integration.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/gcp_integration/main/metadata.json"
+    }
   }
 }
