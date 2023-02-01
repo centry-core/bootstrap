@@ -20,3 +20,4 @@ preordered_plugins:
   - artifacts
   - scheduling
   - shared_orch
+  - security
