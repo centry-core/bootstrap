@@ -443,5 +443,195 @@
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/gcp_integration/main/metadata.json"
     }
+  },
+  "security_scanner_bandit":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_bandit.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_bandit/main/metadata.json"
+    }
+  },
+  "security_scanner_brakeman":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_brakeman.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_brakeman/main/metadata.json"
+    }
+  },
+  "security_scanner_dependencycheck":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_dependencycheck.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_dependencycheck/main/metadata.json"
+    }
+  },
+  "security_scanner_csharp":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_csharp.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_csharp/main/metadata.json"
+    }
+  },
+  "security_scanner_gitleaks":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_gitleaks.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_gitleaks/main/metadata.json"
+    }
+  },
+  "security_scanner_golang":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_golang.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_golang/main/metadata.json"
+    }
+  },
+  "security_scanner_gosec":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_gosec.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_gosec/main/metadata.json"
+    }
+  },
+  "security_scanner_insider":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_insider.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_insider/main/metadata.json"
+    }
+  },
+  "security_scanner_java":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_java.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_java/main/metadata.json"
+    }
+  },
+  "security_scanner_nodejs":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_nodejs.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_nodejs/main/metadata.json"
+    }
+  },
+  "security_scanner_nodejsscan":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_nodejsscan.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_nodejsscan/main/metadata.json"
+    }
+  },
+  "security_scanner_npm":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_npm.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_npm/main/metadata.json"
+    }
+  },
+  "security_scanner_python":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_python.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_python/main/metadata.json"
+    }
+  },
+  "security_scanner_retirejs":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_retirejs.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_retirejs/main/metadata.json"
+    }
+  },
+  "security_scanner_ruby":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_ruby.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_ruby/main/metadata.json"
+    }
+  },
+  "security_scanner_safety":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_safety.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_safety/main/metadata.json"
+    }
+  },
+  "security_scanner_semgrep":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_semgrep.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_semgrep/main/metadata.json"
+    }
+  },
+  "security_scanner_spotbugs":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_spotbugs.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_spotbugs/main/metadata.json"
+    }
+  },
+  "security_scanner_trivy":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_scanner_trivy.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_trivy/main/metadata.json"
+    }
   }
 }
