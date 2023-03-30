@@ -444,6 +444,26 @@
       "metadata": "https://raw.githubusercontent.com/carrier-io/gcp_integration/main/metadata.json"
     }
   },
+  "security_sast": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_sast.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_sast/main/metadata.json"
+    }
+  },
+  "security_dependency": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_dependency.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_dependency/main/metadata.json"
+    }
+  },
   "security_scanner_bandit":{
     "source": {
       "type": "git",
