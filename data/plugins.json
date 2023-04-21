@@ -189,7 +189,7 @@
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/security_scanner_zap.git",
-      "branch": "next"
+      "branch": "main"
     },
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_zap/next/metadata.json"
