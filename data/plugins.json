@@ -189,7 +189,7 @@
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/security_scanner_zap.git",
-      "branch": "next"
+      "branch": "main"
     },
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_zap/next/metadata.json"
@@ -656,6 +656,16 @@
     },
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_trivy/main/metadata.json"
+    }
+  },
+  "system_reporter_email": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/system_reporter_email.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/system_reporter_email/main/metadata.json"
     }
   }
 }
