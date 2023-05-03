@@ -246,7 +246,7 @@
       "branch": "beta-1.0"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/azure_devops/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/azure_devops_integration/beta-1.0/metadata.json"
     }
   },
   "kubernetes": {
