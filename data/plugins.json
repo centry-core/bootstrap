@@ -229,6 +229,16 @@
       "metadata": "https://raw.githubusercontent.com/carrier-io/tasklets/beta-1.0/metadata.json"
     }
   },
+  "kubernetes": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/kubernetes.git",
+      "branch": "beta-1.0"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/kubernetes/beta-1.0/metadata.json"
+    }
+  },
   "performance_analysis": {
     "source": {
       "type": "git",
