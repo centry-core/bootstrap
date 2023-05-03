@@ -229,6 +229,26 @@
       "metadata": "https://raw.githubusercontent.com/carrier-io/tasklets/beta-1.0/metadata.json"
     }
   },
+  "aws_integration": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/aws_integration.git",
+      "branch": "beta-1.0"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/aws_integration/beta-1.0/metadata.json"
+    }
+  },
+  "azure_devops": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/azure_devops_integration.git",
+      "branch": "beta-1.0"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/azure_devops/beta-1.0/metadata.json"
+    }
+  },
   "kubernetes": {
     "source": {
       "type": "git",
@@ -247,6 +267,16 @@
     },
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/performance_analysis/beta-1.0/metadata.json"
+    }
+  },
+  "gcp_integration": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/gcp_integration.git",
+      "branch": "beta-1.0"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/gcp_integration/beta-1.0/metadata.json"
     }
   },
   "system_reporter_email": {
