@@ -12,10 +12,10 @@
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/design-system.git",
-      "branch": "next"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/design-system/next/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/design-system/main/metadata.json"
     }
   },
   "auth": {
@@ -192,7 +192,7 @@
       "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_zap/next/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_scanner_zap/main/metadata.json"
     }
   },
   "security_scanner_qualys": {
