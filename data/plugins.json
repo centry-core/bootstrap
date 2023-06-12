@@ -681,11 +681,11 @@
   "email_template": {
     "source": {
       "type": "git",
-      "source": "https://github.com/carrier-io/email_base.git",
+      "source": "https://github.com/carrier-io/email_template.git",
       "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/email_base/main/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/email_template/main/metadata.json"
     }
   }
 }
