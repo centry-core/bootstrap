@@ -667,5 +667,15 @@
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/system_reporter_email/main/metadata.json"
     }
+  },
+  "s3_integration": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/s3_integration.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/s3_integration/main/metadata.json"
+    }
   }
 }
