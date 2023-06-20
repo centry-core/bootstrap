@@ -668,6 +668,26 @@
       "metadata": "https://raw.githubusercontent.com/carrier-io/system_reporter_email/main/metadata.json"
     }
   },
+  "email_base": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/email_base.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/email_base/main/metadata.json"
+    }
+  },
+  "email_template": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/email_template.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/email_template/main/metadata.json"
+    }
+  },
   "s3_integration": {
     "source": {
       "type": "git",
