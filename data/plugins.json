@@ -318,5 +318,45 @@
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/email_template/beta-1.0/metadata.json"
     }
+  },
+  "open_ai": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/open_ai.git",
+      "branch": "beta-1.0"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/open_ai/beta-1.0/metadata.json"
+    }
+  },
+  "vertex_ai": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/vertex_ai.git",
+      "branch": "beta-1.0"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/vertex_ai/beta-1.0/metadata.json"
+    }
+  },
+  "hugging_face": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/hugging_face.git",
+      "branch": "beta-1.0"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/hugging_face/beta-1.0/metadata.json"
+    }
+  },
+  "prompts": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/prompts.git",
+      "branch": "beta-1.0"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/prompts/beta-1.0/metadata.json"
+    }
   }
 }
