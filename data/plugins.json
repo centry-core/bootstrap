@@ -3,360 +3,360 @@
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/market.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/market/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/market/main/metadata.json"
     }
   },
   "design-system": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/design-system.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/design-system/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/design-system/main/metadata.json"
     }
   },
   "auth": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/auth.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/auth/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/auth/main/metadata.json"
     }
   },
   "auth_root": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/auth_root.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/auth_root/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/auth_root/main/metadata.json"
     }
   },
   "auth_manager": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/auth_manager.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/auth_manager/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/auth_manager/main/metadata.json"
     }
   },
   "auth_core": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/auth_core.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/auth_core/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/auth_core/main/metadata.json"
     }
   },
   "auth_init": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/auth_init.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/auth_init/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/auth_init/main/metadata.json"
     }
   },
   "auth_mappers": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/auth_mappers.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/auth_mappers/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/auth_mappers/main/metadata.json"
     }
   },
   "auth_oidc": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/auth_oidc.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/auth_oidc/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/auth_oidc/main/metadata.json"
     }
   },
   "projects": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/projects.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/projects/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/projects/main/metadata.json"
     }
   },
   "shared": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/shared.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/shared/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/shared/main/metadata.json"
     }
   },
   "tasks": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/tasks.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/tasks/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/tasks/main/metadata.json"
     }
   },
   "secrets": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/secrets.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/secrets/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/secrets/main/metadata.json"
     }
   },
   "backend_performance": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/backend_performance.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/backend_performance/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/backend_performance/main/metadata.json"
     }
   },
   "artifacts": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/artifacts.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/artifacts/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/artifacts/main/metadata.json"
     }
   },
   "theme": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/theme.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/theme/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/theme/main/metadata.json"
     }
   },
   "integrations": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/integrations.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/integrations/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/integrations/main/metadata.json"
     }
   },
   "reporter_email": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/reporter_email.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/reporter_email/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/reporter_email/main/metadata.json"
     }
   },
   "reporter_jira": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/reporter_jira.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/reporter_jira/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/reporter_jira/main/metadata.json"
     }
   },
   "scheduling": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/scheduling.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/scheduling/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/scheduling/main/metadata.json"
     }
   },
   "admin": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/admin.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/admin/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/admin/main/metadata.json"
     }
   },
   "ui_performance": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/ui_performance.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/ui_performance/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/ui_performance/main/metadata.json"
     }
   },
   "tasklets": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/tasklets.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/tasklets/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/tasklets/main/metadata.json"
     }
   },
   "aws_integration": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/aws_integration.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/aws_integration/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/aws_integration/main/metadata.json"
     }
   },
-  "azure_devops": {
+  "azure_devops_integration": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/azure_devops_integration.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/azure_devops_integration/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/azure_devops_integration/main/metadata.json"
     }
   },
   "kubernetes": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/kubernetes.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/kubernetes/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/kubernetes/main/metadata.json"
     }
   },
   "performance_analysis": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/performance_analysis",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/performance_analysis/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/performance_analysis/main/metadata.json"
     }
   },
   "gcp_integration": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/gcp_integration.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/gcp_integration/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/gcp_integration/main/metadata.json"
     }
   },
   "system_reporter_email": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/system_reporter_email.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/system_reporter_email/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/system_reporter_email/main/metadata.json"
     }
   },
   "s3_integration": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/s3_integration.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/s3_integration/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/s3_integration/main/metadata.json"
     }
   },
   "email_base": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/email_base.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/email_base/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/email_base/main/metadata.json"
     }
   },
   "email_template": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/email_template.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/email_template/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/email_template/main/metadata.json"
     }
   },
   "open_ai": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/open_ai.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/open_ai/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/open_ai/main/metadata.json"
     }
   },
   "vertex_ai": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/vertex_ai.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/vertex_ai/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/vertex_ai/main/metadata.json"
     }
   },
   "hugging_face": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/hugging_face.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/hugging_face/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/hugging_face/main/metadata.json"
     }
   },
   "prompts": {
     "source": {
       "type": "git",
       "source": "https://github.com/carrier-io/prompts.git",
-      "branch": "beta-1.0"
+      "branch": "main"
     },
     "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/prompts/beta-1.0/metadata.json"
+      "metadata": "https://raw.githubusercontent.com/carrier-io/prompts/main/metadata.json"
     }
   }
 }
