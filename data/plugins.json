@@ -19,6 +19,16 @@
       "metadata": "https://raw.githubusercontent.com/carrier-io/design-system/main/metadata.json"
     }
   },
+  "audit_logs": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/audit_logs.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/audit_logs/main/metadata.json"
+    }
+  },
   "auth": {
     "source": {
       "type": "git",
