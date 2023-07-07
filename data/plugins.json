@@ -289,16 +289,6 @@
       "metadata": "https://raw.githubusercontent.com/carrier-io/gcp_integration/main/metadata.json"
     }
   },
-  "system_reporter_email": {
-    "source": {
-      "type": "git",
-      "source": "https://github.com/carrier-io/system_reporter_email.git",
-      "branch": "main"
-    },
-    "objects": {
-      "metadata": "https://raw.githubusercontent.com/carrier-io/system_reporter_email/main/metadata.json"
-    }
-  },
   "s3_integration": {
     "source": {
       "type": "git",
@@ -369,8 +359,6 @@
       "metadata": "https://raw.githubusercontent.com/carrier-io/prompts/main/metadata.json"
     }
   },
-
-
   "shared_orch": {
     "source": {
       "type": "git",
