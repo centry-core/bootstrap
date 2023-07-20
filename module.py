@@ -34,7 +34,13 @@ class Module(module.ModuleModel):
         """ Init module """
         log.info("Initializing module")
         #
-        repo_resolver = RepoResolver(self, self.descriptor.config["plugin_repo"])
+        resolvers = []
+        #
+        for key in ["local_plugin_repo", "customer_plugin_repo", "plugin_repo"]:
+            if key in self.descriptor.config:
+                resolvers.append(self.descriptor.config[key])
+        #
+        repo_resolver = RepoResolver(self, resolvers)
         repo_resolver.init()
         #
         plugins_to_check = [
