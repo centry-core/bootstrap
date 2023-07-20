@@ -447,6 +447,16 @@
       "metadata": "https://raw.githubusercontent.com/carrier-io/security/next/metadata.json"
     }
   },
+  "security_analysis": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/security_analysis.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/security_analysis/main/metadata.json"
+    }
+  },
   "security_scanner_zap": {
     "source": {
       "type": "git",
