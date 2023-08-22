@@ -329,6 +329,16 @@
       "metadata": "https://raw.githubusercontent.com/carrier-io/open_ai/main/metadata.json"
     }
   },
+  "open_ai_azure": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/open_ai_azure.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/open_ai_azure/main/metadata.json"
+    }
+  },
   "vertex_ai": {
     "source": {
       "type": "git",
