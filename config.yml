@@ -19,3 +19,7 @@ preordered_plugins:
   - tasks
   - artifacts
   - scheduling
+  - integrations
+  - s3_integration
+  - email_base
+  - email_template
