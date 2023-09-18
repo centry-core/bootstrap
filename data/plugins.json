@@ -339,6 +339,16 @@
       "metadata": "https://raw.githubusercontent.com/carrier-io/open_ai_azure/main/metadata.json"
     }
   },
+  "ai_dial": {
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/ai_dial.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/ai_dial/main/metadata.json"
+    }
+  },
   "vertex_ai": {
     "source": {
       "type": "git",
