@@ -29,6 +29,8 @@ class Module(module.ModuleModel):
     def __init__(self, context, descriptor):
         self.context = context
         self.descriptor = descriptor
+        #
+        self.repo_resolver = None
 
     def init(self):  # pylint: disable=R0914
         """ Init module """
@@ -40,8 +42,8 @@ class Module(module.ModuleModel):
             if key in self.descriptor.config:
                 resolvers.append(self.descriptor.config[key])
         #
-        repo_resolver = RepoResolver(self, resolvers)
-        repo_resolver.init()
+        self.repo_resolver = RepoResolver(self, resolvers)
+        self.repo_resolver.init()
         #
         plugins_to_check = [
             *self.descriptor.config.get("local_preordered_plugins", []),
@@ -61,12 +63,12 @@ class Module(module.ModuleModel):
                 #
                 metadata = plugins_provider.get_plugin_metadata(plugin)
             else:
-                plugin_info = repo_resolver.resolve(plugin)
+                plugin_info = self.repo_resolver.resolve(plugin)
                 if plugin_info is None:
                     log.error("Plugin %s is not known", plugin)
                     continue
                 #
-                metadata_provider = repo_resolver.get_metadata_provider(plugin)
+                metadata_provider = self.repo_resolver.get_metadata_provider(plugin)
                 #
                 metadata_url = plugin_info["objects"]["metadata"]
                 metadata = metadata_provider.get_metadata({"source": metadata_url})
@@ -78,7 +80,7 @@ class Module(module.ModuleModel):
                     log.error("Plugin %s source type %s is not supported", plugin, source_type)
                     continue
                 #
-                source_provider = repo_resolver.get_source_provider(plugin)
+                source_provider = self.repo_resolver.get_source_provider(plugin)
                 #
                 source = source_provider.get_source(source_target)
                 plugins_provider.add_plugin(plugin, source)
@@ -89,9 +91,10 @@ class Module(module.ModuleModel):
                 #
                 known_plugins.add(dependency)
                 plugins_to_check.append(dependency)
-        #
-        repo_resolver.deinit()
 
     def deinit(self):  # pylint: disable=R0201
         """ De-init module """
         log.info("De-initializing module")
+        #
+        if self.repo_resolver is not None:
+            self.repo_resolver.deinit()
