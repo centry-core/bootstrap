@@ -790,5 +790,15 @@
     "objects": {
       "metadata": "https://raw.githubusercontent.com/carrier-io/ai_dial/main/metadata.json"
     }
+  },
+  "open_ai_azure_api":{
+    "source": {
+      "type": "git",
+      "source": "https://github.com/carrier-io/open_ai_azure_api.git",
+      "branch": "main"
+    },
+    "objects": {
+      "metadata": "https://raw.githubusercontent.com/carrier-io/open_ai_azure_api/main/metadata.json"
+    }
   }
 }
