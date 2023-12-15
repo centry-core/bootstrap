@@ -45,7 +45,8 @@ class RepoResolver:
         return self.lookup_data.get(plugin, None)
 
     def _github_lookup(self, plugin):
-        if self.lookup_data is None:
+        whitelist = self.repo_config.get("whitelist", None)
+        if whitelist is not None and plugin not in whitelist:
             return None
         #
         namespace = self.repo_config.get("namespace", "centry-core")
