@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # coding=utf-8
 
-#   Copyright 2021 getcarrier.io
+#   Copyright 2023 getcarrier.io
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -85,14 +85,14 @@ class Module(module.ModuleModel):
                 source = source_provider.get_source(source_target)
                 plugins_provider.add_plugin(plugin, source)
             #
-            for dependency in metadata.get("depends_on", list()):
+            for dependency in metadata.get("depends_on", []):
                 if dependency in known_plugins:
                     continue
                 #
                 known_plugins.add(dependency)
                 plugins_to_check.append(dependency)
 
-    def deinit(self):  # pylint: disable=R0201
+    def deinit(self):
         """ De-init module """
         log.info("De-initializing module")
         #

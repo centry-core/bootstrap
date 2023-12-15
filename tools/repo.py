@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # coding=utf-8
 
-#   Copyright 2022 getcarrier.io
+#   Copyright 2023 getcarrier.io
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -30,11 +30,44 @@ class RepoResolver:
         self.module = module
         self.repo_config = repo_config
         #
-        self.sub_resolvers = list()
-        self.plugin_repo = None
+        self.sub_resolvers = []
         #
         self.metadata_provider = None
         self.source_provider = None
+        #
+        self.lookup = self._local_lookup
+        self.lookup_data = None
+
+    def _local_lookup(self, plugin):
+        if self.lookup_data is None:
+            return None
+        #
+        return self.lookup_data.get(plugin, None)
+
+    def _github_lookup(self, plugin):
+        if self.lookup_data is None:
+            return None
+        #
+        namespace = self.repo_config.get("namespace", "centry-core")
+        branch = self.repo_config.get("branch", "main")
+        file = self.repo_config.get("metadata_file", "metadata.json")
+        #
+        metadata_url = f"https://raw.githubusercontent.com/{namespace}/{plugin}/{branch}/{file}"
+        try:
+            self.metadata_provider.get_metadata({"source": metadata_url})
+        except:  # pylint: disable=W0702
+            return None
+        #
+        return {
+            "source": {
+                "type": "git",
+                "source": f"https://github.com/{namespace}/{plugin}.git",
+                "branch": branch
+            },
+            "objects": {
+                "metadata": metadata_url
+            }
+        }
 
     def init(self):
         """ Init resolver """
@@ -43,30 +76,38 @@ class RepoResolver:
                 sub_resolver = RepoResolver(self.module, config)
                 sub_resolver.init()
                 self.sub_resolvers.append(sub_resolver)
+            #
+            return
         #
-        elif self.repo_config["type"] == "resource":
+        repo_type = self.repo_config.get("type", "github")
+        #
+        if repo_type == "resource":
             log.info("Loading plugin repository from resource: %s", self.repo_config["name"])
-            self.plugin_repo = json.loads(
+            self.lookup_data = json.loads(
                 self.module.descriptor.loader.get_data(self.repo_config["name"])
             )
         #
-        elif self.repo_config["type"] == "config":
+        elif repo_type == "config":
             log.info("Loading plugin repository from config")
-            self.plugin_repo = self.repo_config["data"]
+            self.lookup_data = self.repo_config["data"]
         #
-        elif self.repo_config["type"] == "config_key":
+        elif repo_type == "config_key":
             config_key = self.repo_config["name"]
             if config_key not in self.module.descriptor.config:
                 return
             log.info("Loading plugin repository from config key")
-            self.plugin_repo = self.module.descriptor.config[config_key]
+            self.lookup_data = self.module.descriptor.config[config_key]
         #
-        if self.plugin_repo is None:
+        elif repo_type == "github":
+            log.info("Using GitHub plugin repository")
+            self.lookup = self._github_lookup
+        #
+        else:
             return
         #
         # Metadata
         #
-        metadata_config = self.plugin_repo.get("metadata_provider", None)
+        metadata_config = self.repo_config.get("metadata_provider", None)
         if metadata_config is None:
             metadata_config = {
                 "type": "pylon.core.providers.metadata.http",
@@ -82,7 +123,7 @@ class RepoResolver:
         #
         # Source
         #
-        source_config = self.plugin_repo.get("source_provider", None)
+        source_config = self.repo_config.get("source_provider", None)
         if source_config is None:
             source_config = {
                 "type": "pylon.core.providers.source.git",
@@ -105,10 +146,7 @@ class RepoResolver:
             if sub_result is not None:
                 return sub_result
         #
-        if self.plugin_repo is None:
-            return None
-        #
-        return self.plugin_repo.get(plugin, None)
+        return self.lookup(plugin)
 
     def get_metadata_provider(self, plugin):
         """ Get metadata provider for plugin """
@@ -117,10 +155,7 @@ class RepoResolver:
             if sub_result is not None:
                 return sub_result
         #
-        if self.plugin_repo is None:
-            return None
-        #
-        if plugin not in self.plugin_repo:
+        if self.lookup(plugin) is None:
             return None
         #
         return self.metadata_provider
@@ -132,15 +167,12 @@ class RepoResolver:
             if sub_result is not None:
                 return sub_result
         #
-        if self.plugin_repo is None:
-            return None
-        #
-        if plugin not in self.plugin_repo:
+        if self.lookup(plugin) is None:
             return None
         #
         return self.source_provider
 
-    def deinit(self):  # pylint: disable=R0201
+    def deinit(self):
         """ De-init resolver """
         while self.sub_resolvers:
             sub_resolver = self.sub_resolvers.pop(0)

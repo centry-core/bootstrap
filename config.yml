@@ -1,6 +1,6 @@
 plugin_repo:
-  type: resource
-  name: data/plugins.json
+  type: github
+  namespace: centry-core
   metadata_provider:
     type: pylon.core.providers.metadata.http
   source_provider:
@@ -8,18 +8,4 @@ plugin_repo:
     delete_git_dir: false
     depth: null
 
-preordered_plugins:
-  - auth
-  - admin
-  - theme
-  - design-system
-  - shared
-  - projects
-  - secrets
-  - tasks
-  - artifacts
-  - scheduling
-  - integrations
-  - s3_integration
-  - email_base
-  - email_template
+preordered_plugins: []
