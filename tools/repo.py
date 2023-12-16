@@ -49,9 +49,12 @@ class RepoResolver:
         if whitelist is not None and plugin not in whitelist:
             return None
         #
-        namespace = self.repo_config.get("namespace", "centry-core")
+        namespace = self.repo_config.get("namespace", None)
         branch = self.repo_config.get("branch", "main")
         file = self.repo_config.get("metadata_file", "metadata.json")
+        #
+        if namespace is None:
+            return None
         #
         metadata_url = f"https://raw.githubusercontent.com/{namespace}/{plugin}/{branch}/{file}"
         try:
@@ -80,7 +83,7 @@ class RepoResolver:
             #
             return
         #
-        repo_type = self.repo_config.get("type", "github")
+        repo_type = self.repo_config.get("type", "unknown")
         #
         if repo_type == "resource":
             log.info("Loading plugin repository from resource: %s", self.repo_config["name"])
