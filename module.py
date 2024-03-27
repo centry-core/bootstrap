@@ -17,10 +17,13 @@
 
 """ Module """
 
+import threading
+
 from pylon.core.tools import log  # pylint: disable=E0611,E0401
 from pylon.core.tools import module  # pylint: disable=E0611,E0401
 
 from .tools.repo import RepoResolver
+from .tools.event import RuntimeAnnoucer
 
 
 class Module(module.ModuleModel):
@@ -31,6 +34,9 @@ class Module(module.ModuleModel):
         self.descriptor = descriptor
         #
         self.repo_resolver = None
+        #
+        self.stop_event = threading.Event()
+        self.announcer = None
 
     def init(self):  # pylint: disable=R0914
         """ Init module """
@@ -91,10 +97,17 @@ class Module(module.ModuleModel):
                 #
                 known_plugins.add(dependency)
                 plugins_to_check.append(dependency)
+        #
+        self.descriptor.init_events()
+        #
+        self.announcer = RuntimeAnnoucer(self, {})
+        self.announcer.start()
 
     def deinit(self):
         """ De-init module """
         log.info("De-initializing module")
+        #
+        self.stop_event.set()
         #
         if self.repo_resolver is not None:
             self.repo_resolver.deinit()
