@@ -108,6 +108,14 @@ class Module(module.ModuleModel):
         log.info("De-initializing module")
         #
         self.stop_event.set()
+        self.announcer.join(3.0)
+        #
+        self.context.event_manager.fire_event(
+            "bootstrap_runtime_info_prune",
+            {
+                "pylon_id": self.context.id,
+            },
+        )
         #
         if self.repo_resolver is not None:
             self.repo_resolver.deinit()
