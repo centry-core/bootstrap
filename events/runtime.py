@@ -18,7 +18,6 @@
 """ Event """
 
 import os
-import signal
 
 from pylon.core.tools import log, web  # pylint: disable=E0611,E0401
 
@@ -70,4 +69,4 @@ class Event:  # pylint: disable=R0903,E1101
         if payload.get("restart", True):
             log.info("Restarting pylon")
             #
-            os.kill(os.getpid(), signal.SIGTERM)
+            os.system(f"kill {os.getpid()}")
