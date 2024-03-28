@@ -17,8 +17,8 @@
 
 """ Event """
 
-import os
 import signal
+import threading
 
 from pylon.core.tools import log, web  # pylint: disable=E0611,E0401
 
@@ -69,4 +69,8 @@ class Event:  # pylint: disable=R0903,E1101
         #
         if payload.get("restart", True):
             log.info("Restarting pylon")
-            os.kill(os.getpid(), signal.SIGTERM)
+            #
+            signal.pthread_kill(
+                threading.main_thread().ident,
+                signal.SIGTERM,
+            )
