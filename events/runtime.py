@@ -17,8 +17,6 @@
 
 """ Event """
 
-import os
-
 from pylon.core.tools import log, web  # pylint: disable=E0611,E0401
 
 
@@ -67,6 +65,12 @@ class Event:  # pylint: disable=R0903,E1101
             log.info("Plugin updated to version %s", metadata.get("version", "0.0.0"))
         #
         if payload.get("restart", True):
-            log.info("Restarting pylon")
+            import os  # pylint: disable=C0415
+            import subprocess  # pylint: disable=C0415
             #
-            os.system(f"kill {os.getpid()}")
+            pylon_pid = os.getpid()
+            #
+            log.info("Restarting pylon (pid = %s)", pylon_pid)
+            subprocess.Popen(  # pylint: disable=R1732
+                    ["/bin/bash", "-c", f"bash -c 'sleep 1; kill {pylon_pid}' &"]
+            )
