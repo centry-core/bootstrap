@@ -69,4 +69,4 @@ class Event:  # pylint: disable=R0903,E1101
             #
             import signal  # pylint: disable=C0415
             import _thread  # pylint: disable=C0415
-            _thread.interrupt_main(signum=signal.SIGTERM)
+            _thread.interrupt_main(signal.SIGTERM)
