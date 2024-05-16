@@ -39,7 +39,7 @@ class Event:  # pylint: disable=R0903,E1101
         #
         for plugin in payload.get("plugins", []):
             if plugin.startswith("!"):
-                plugin = plugin.rstrip("!")
+                plugin = plugin.lstrip("!")
                 log.info("Deleting plugin: %s", plugin)
                 #
                 if plugins_provider.plugin_exists(plugin):
