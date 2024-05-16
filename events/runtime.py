@@ -38,31 +38,41 @@ class Event:  # pylint: disable=R0903,E1101
         repo_resolver = self.repo_resolver
         #
         for plugin in payload.get("plugins", []):
-            log.info("Updating plugin: %s", plugin)
-            #
-            plugin_info = repo_resolver.resolve(plugin)
-            #
-            if plugin_info is None:
-                log.error("Plugin is not known by repo resolver(s)")
-                continue
-            #
-            metadata_provider = repo_resolver.get_metadata_provider(plugin)
-            #
-            metadata_url = plugin_info["objects"]["metadata"]
-            metadata = metadata_provider.get_metadata({"source": metadata_url})
-            #
-            source_target = plugin_info["source"].copy()
-            source_type = source_target.pop("type")
-            #
-            if source_type != "git":
-                log.error("Plugin source type is not supported: %s", source_type)
-                continue
-            #
-            source_provider = repo_resolver.get_source_provider(plugin)
-            source = source_provider.get_source(source_target)
-            #
-            plugins_provider.add_plugin(plugin, source)
-            log.info("Plugin updated to version %s", metadata.get("version", "0.0.0"))
+            if plugin.startswith("!"):
+                plugin = plugin.rstrip("!")
+                log.info("Deleting plugin: %s", plugin)
+                #
+                if plugins_provider.plugin_exists(plugin):
+                    plugins_provider.delete_plugin(plugin)
+            else:
+                if plugins_provider.plugin_exists(plugin):
+                    log.info("Updating plugin: %s", plugin)
+                else:
+                    log.info("Installing plugin: %s", plugin)
+                #
+                plugin_info = repo_resolver.resolve(plugin)
+                #
+                if plugin_info is None:
+                    log.error("Plugin is not known by repo resolver(s)")
+                    continue
+                #
+                metadata_provider = repo_resolver.get_metadata_provider(plugin)
+                #
+                metadata_url = plugin_info["objects"]["metadata"]
+                metadata = metadata_provider.get_metadata({"source": metadata_url})
+                #
+                source_target = plugin_info["source"].copy()
+                source_type = source_target.pop("type")
+                #
+                if source_type != "git":
+                    log.error("Plugin source type is not supported: %s", source_type)
+                    continue
+                #
+                source_provider = repo_resolver.get_source_provider(plugin)
+                source = source_provider.get_source(source_target)
+                #
+                plugins_provider.add_plugin(plugin, source)
+                log.info("Plugin updated to version %s", metadata.get("version", "0.0.0"))
         #
         if payload.get("restart", True):
             import os  # pylint: disable=C0415
