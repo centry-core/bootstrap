@@ -47,6 +47,11 @@ class RuntimeAnnoucer(threading.Thread):  # pylint: disable=R0903
                 "repo_version": "-",
                 "config": descriptor.config,
             })
+            #
+            try:
+                result[-1]["config_data"] = descriptor.config_data.decode()
+            except:  # pylint: disable=W0702
+                pass
         #
         return result
 
