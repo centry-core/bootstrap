@@ -78,7 +78,7 @@ class Event:  # pylint: disable=R0903,E1101
         #
         for plugin, config in payload.get("configs", {}).items():
             log.info("Updating config: %s", plugin)
-            config_data = yaml.dump(config).encode()
+            config_data = config.encode()
             self.context.module_manager.providers["config"].add_config_data(plugin, config_data)
         #
         if payload.get("restart", True):
