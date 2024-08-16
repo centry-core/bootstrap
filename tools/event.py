@@ -37,7 +37,7 @@ class RuntimeAnnoucer(threading.Thread):  # pylint: disable=R0903
         result = []
         module_manager = self.module.context.module_manager
         #
-        for descriptor in module_manager.modules.values():
+        for descriptor in module_manager.descriptors.values():
             result.append({
                 "name": descriptor.name,
                 "description": descriptor.metadata.get("name", ""),
@@ -45,6 +45,7 @@ class RuntimeAnnoucer(threading.Thread):  # pylint: disable=R0903
                 "activated": descriptor.activated,
                 "local_version": descriptor.metadata.get("version", "0.0.0"),
                 "repo_version": "-",
+                "config": descriptor.config,
             })
         #
         return result

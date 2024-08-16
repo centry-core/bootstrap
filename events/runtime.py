@@ -17,6 +17,8 @@
 
 """ Event """
 
+import yaml  # pylint: disable=E0401
+
 from pylon.core.tools import log, web  # pylint: disable=E0611,E0401
 
 
@@ -73,6 +75,11 @@ class Event:  # pylint: disable=R0903,E1101
                 #
                 plugins_provider.add_plugin(plugin, source)
                 log.info("Plugin updated to version %s", metadata.get("version", "0.0.0"))
+        #
+        for plugin, config in payload.get("configs", {}).items():
+            log.info("Updating config: %s", plugin)
+            config_data = yaml.dump(config).encode()
+            self.context.module_manager.providers["config"].add_config_data(plugin, config_data)
         #
         if payload.get("restart", True):
             import os  # pylint: disable=C0415
