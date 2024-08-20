@@ -17,6 +17,7 @@
 
 """ Module """
 
+import logging
 import threading
 
 from pylon.core.tools import log  # pylint: disable=E0611,E0401
@@ -24,6 +25,7 @@ from pylon.core.tools import module  # pylint: disable=E0611,E0401
 
 from .tools.repo import RepoResolver
 from .tools.event import RuntimeAnnoucer
+from .tools.logs import LocalListLogHandler
 
 
 class Module(module.ModuleModel):
@@ -33,6 +35,8 @@ class Module(module.ModuleModel):
         self.context = context
         self.descriptor = descriptor
         #
+        self.log_buffer = []
+        #
         self.repo_resolver = None
         #
         self.stop_event = threading.Event()
@@ -41,6 +45,12 @@ class Module(module.ModuleModel):
     def init(self):  # pylint: disable=R0914
         """ Init module """
         log.info("Initializing module")
+        #
+        if self.descriptor.config.get("debug", False):
+            handler = LocalListLogHandler(
+                target_list=self.log_buffer,
+            )
+            logging.getLogger("").addHandler(handler)
         #
         resolvers = []
         #
