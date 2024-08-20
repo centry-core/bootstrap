@@ -68,6 +68,7 @@ class RuntimeAnnoucer(threading.Thread):  # pylint: disable=R0903
                         {
                             "pylon_id": self.module.context.id,
                             "runtime_info": self._collect_info(),
+                            "logs": self.module.log_buffer.copy(),
                         },
                     )
             except:  # pylint: disable=W0702
