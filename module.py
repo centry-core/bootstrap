@@ -50,6 +50,7 @@ class Module(module.ModuleModel):
             handler = LocalListLogHandler(
                 target_list=self.log_buffer,
             )
+            handler.setFormatter(log.state.formatter)
             logging.getLogger("").addHandler(handler)
         #
         resolvers = []
