@@ -17,8 +17,6 @@
 
 """ Event """
 
-import yaml  # pylint: disable=E0401
-
 from pylon.core.tools import log, web  # pylint: disable=E0611,E0401
 
 
@@ -26,7 +24,7 @@ class Event:  # pylint: disable=R0903,E1101
     """ Event """
 
     @web.event("bootstrap_runtime_update")
-    def _bootstrap_runtime_update(self, context, event, payload):  # pylint: disable=R0914
+    def _bootstrap_runtime_update(self, context, event, payload):  # pylint: disable=R0914,R0912
         _ = context, event
         #
         if not isinstance(payload, dict):
@@ -79,13 +77,19 @@ class Event:  # pylint: disable=R0903,E1101
         for plugin, config in payload.get("configs", {}).items():
             log.info("Updating config: %s", plugin)
             config_data = config.encode()
-            self.context.module_manager.providers["config"].add_config_data(plugin, config_data)
+            #
+            module_manager = self.context.module_manager
+            module_manager.providers["config"].add_config_data(plugin, config_data)
+            #
+            if plugin in module_manager.descriptors:
+                descriptor = module_manager.descriptors[plugin]
+                descriptor.load_config()
         #
         if payload.get("restart", True):
             import os  # pylint: disable=C0415
             import subprocess  # pylint: disable=C0415
             #
-            pylon_pid = os.getpid()
+            pylon_pid = payload.get("pylon_pid", os.getpid())
             #
             log.info("Restarting pylon (pid = %s)", pylon_pid)
             subprocess.Popen(  # pylint: disable=R1732
