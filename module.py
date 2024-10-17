@@ -17,8 +17,10 @@
 
 """ Module """
 
+import signal
 import logging
 import threading
+import faulthandler
 
 from pylon.core.tools import log  # pylint: disable=E0611,E0401
 from pylon.core.tools import module  # pylint: disable=E0611,E0401
@@ -45,6 +47,8 @@ class Module(module.ModuleModel):
     def init(self):  # pylint: disable=R0914
         """ Init module """
         log.info("Initializing module")
+        #
+        faulthandler.register(signum=signal.SIGUSR1)  # pylint: disable=E1101
         #
         if self.descriptor.config.get("debug", False):
             handler = LocalListLogHandler(
