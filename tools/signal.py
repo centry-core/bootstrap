@@ -25,4 +25,8 @@ def signal_sigusr2(signal_num, stack_frame):
     """ SIGUSR2 signal handler: dump runtime info """
     _ = signal_num, stack_frame
     #
-    log.info("Gevent run info: %s", format_run_info())
+    log.info("Gevent run info:")
+    #
+    run_info = format_run_info()
+    for line in run_info:
+        log.info("%s", line)
