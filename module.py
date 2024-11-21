@@ -28,6 +28,7 @@ from pylon.core.tools import module  # pylint: disable=E0611,E0401
 from .tools.repo import RepoResolver
 from .tools.event import RuntimeAnnoucer
 from .tools.logs import LocalListLogHandler
+from .tools.signal import signal_sigusr2
 
 
 class Module(module.ModuleModel):
@@ -49,6 +50,9 @@ class Module(module.ModuleModel):
         log.info("Initializing module")
         #
         faulthandler.register(signum=signal.SIGUSR1)  # pylint: disable=E1101
+        #
+        if self.context.web_runtime == "gevent":
+            signal.signal(signal.SIGUSR2, signal_sigusr2)  # pylint: disable=E1101
         #
         if self.descriptor.config.get("debug", False):
             handler = LocalListLogHandler(
