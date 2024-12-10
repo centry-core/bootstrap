@@ -55,6 +55,8 @@ class Module(module.ModuleModel):
             signal.signal(signal.SIGUSR2, signal_sigusr2)  # pylint: disable=E1101
         #
         if self.descriptor.config.get("debug", False):
+            logging.root.setLevel(logging.DEBUG)
+            #
             handler = LocalListLogHandler(
                 target_list=self.log_buffer,
             )
