@@ -97,9 +97,10 @@ class Event:  # pylint: disable=R0903,E1101
                     logging.root.setLevel(logging.DEBUG)
                     #
                     self.log_handler = LocalListLogHandler(  # pylint: disable=W0201
-                        target_list=self.log_buffer,
+                        target_list=self.log_buffer,  # pylint: disable=E0203
                     )
                     self.log_handler.setFormatter(log.state.formatter)
+                    #
                     logging.getLogger("").addHandler(self.log_handler)
             elif action == "disable_debug_mode":
                 log.info("Disabling debug mode")
@@ -112,6 +113,8 @@ class Event:  # pylint: disable=R0903,E1101
                     self.log_handler = None  # pylint: disable=W0201
                     #
                     logging.root.setLevel(logging.INFO)
+                    #
+                    self.log_buffer = []  # pylint: disable=W0201
         #
         if payload.get("restart", True):
             import os  # pylint: disable=C0415
