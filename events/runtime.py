@@ -17,14 +17,18 @@
 
 """ Event """
 
+import logging
+
 from pylon.core.tools import log, web  # pylint: disable=E0611,E0401
+
+from ..tools.logs import LocalListLogHandler
 
 
 class Event:  # pylint: disable=R0903,E1101
     """ Event """
 
     @web.event("bootstrap_runtime_update")
-    def _bootstrap_runtime_update(self, context, event, payload):  # pylint: disable=R0914,R0912
+    def _bootstrap_runtime_update(self, context, event, payload):  # pylint: disable=R0914,R0912,R0915
         _ = context, event
         #
         if not isinstance(payload, dict):
@@ -84,6 +88,30 @@ class Event:  # pylint: disable=R0903,E1101
             if plugin in module_manager.descriptors:
                 descriptor = module_manager.descriptors[plugin]
                 descriptor.load_config()
+        #
+        for action in payload.get("actions", []):
+            if action == "enable_debug_mode":
+                log.info("Enabling debug mode")
+                #
+                if self.log_handler is None:  # pylint: disable=E0203
+                    logging.root.setLevel(logging.DEBUG)
+                    #
+                    self.log_handler = LocalListLogHandler(  # pylint: disable=W0201
+                        target_list=self.log_buffer,
+                    )
+                    self.log_handler.setFormatter(log.state.formatter)
+                    logging.getLogger("").addHandler(self.log_handler)
+            elif action == "disable_debug_mode":
+                log.info("Disabling debug mode")
+                #
+                if self.log_handler is not None:  # pylint: disable=E0203
+                    logging.getLogger("").removeHandler(self.log_handler)
+                    #
+                    self.log_handler.flush()
+                    self.log_handler.close()
+                    self.log_handler = None  # pylint: disable=W0201
+                    #
+                    logging.root.setLevel(logging.INFO)
         #
         if payload.get("restart", True):
             import os  # pylint: disable=C0415

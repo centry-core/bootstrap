@@ -39,6 +39,7 @@ class Module(module.ModuleModel):
         self.descriptor = descriptor
         #
         self.log_buffer = []
+        self.log_handler = None
         #
         self.repo_resolver = None
         #
@@ -57,11 +58,11 @@ class Module(module.ModuleModel):
         if self.descriptor.config.get("debug", False):
             logging.root.setLevel(logging.DEBUG)
             #
-            handler = LocalListLogHandler(
+            self.log_handler = LocalListLogHandler(
                 target_list=self.log_buffer,
             )
-            handler.setFormatter(log.state.formatter)
-            logging.getLogger("").addHandler(handler)
+            self.log_handler.setFormatter(log.state.formatter)
+            logging.getLogger("").addHandler(self.log_handler)
         #
         resolvers = []
         #
