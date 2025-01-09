@@ -73,6 +73,64 @@ class RepoResolver:
             }
         }
 
+    def _github_zip_lookup(self, plugin):
+        whitelist = self.repo_config.get("whitelist", None)
+        if whitelist is not None and plugin not in whitelist:
+            return None
+        #
+        namespace = self.repo_config.get("namespace", None)
+        branch = self.repo_config.get("branch", "main")
+        ref_type = self.repo_config.get("ref_type", "heads")
+        file = self.repo_config.get("metadata_file", "metadata.json")
+        #
+        if namespace is None:
+            return None
+        #
+        metadata_url = f"https://raw.githubusercontent.com/{namespace}/{plugin}/{branch}/{file}"
+        try:
+            self.metadata_provider.get_metadata({"source": metadata_url})
+        except:  # pylint: disable=W0702
+            return None
+        #
+        return {
+            "source": {
+                "type": "http_zip",
+                "source": f"https://codeload.github.com/{namespace}/{plugin}/zip/refs/{ref_type}/{branch}",  # pylint: disable=C0301
+            },
+            "objects": {
+                "metadata": metadata_url
+            }
+        }
+
+    def _github_tar_lookup(self, plugin):
+        whitelist = self.repo_config.get("whitelist", None)
+        if whitelist is not None and plugin not in whitelist:
+            return None
+        #
+        namespace = self.repo_config.get("namespace", None)
+        branch = self.repo_config.get("branch", "main")
+        ref_type = self.repo_config.get("ref_type", "heads")
+        file = self.repo_config.get("metadata_file", "metadata.json")
+        #
+        if namespace is None:
+            return None
+        #
+        metadata_url = f"https://raw.githubusercontent.com/{namespace}/{plugin}/{branch}/{file}"
+        try:
+            self.metadata_provider.get_metadata({"source": metadata_url})
+        except:  # pylint: disable=W0702
+            return None
+        #
+        return {
+            "source": {
+                "type": "http_tar",
+                "source": f"https://codeload.github.com/{namespace}/{plugin}/tar.gz/refs/{ref_type}/{branch}",  # pylint: disable=C0301
+            },
+            "objects": {
+                "metadata": metadata_url
+            }
+        }
+
     def init(self):
         """ Init resolver """
         if isinstance(self.repo_config, list):
@@ -105,6 +163,14 @@ class RepoResolver:
         elif repo_type == "github":
             log.info("Using GitHub plugin repository")
             self.lookup = self._github_lookup
+        #
+        elif repo_type == "github_zip":
+            log.info("Using GitHub[zip] plugin repository")
+            self.lookup = self._github_zip_lookup
+        #
+        elif repo_type == "github_tar":
+            log.info("Using GitHub[tar] plugin repository")
+            self.lookup = self._github_tar_lookup
         #
         else:
             return
