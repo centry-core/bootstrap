@@ -116,10 +116,16 @@ class Event:  # pylint: disable=R0903,E1101
                     #
                     self.log_buffer = []  # pylint: disable=W0201
         #
-        for plugin in payload.get("reload", []):
-            log.info("Requesting plugin reload: %s", plugin)
+        reload_plugins = payload.get("reload", [])
+        #
+        if reload_plugins:
+            for plugin in self.context.module_manager.load_order:
+                if plugin in reload_plugins:
+                    log.info("Requesting plugin reload: %s", plugin)
+                    #
+                    self.context.manager.reload_plugin(plugin)
             #
-            self.context.manager.reload_plugin(plugin)
+            log.info("All reloads done")
         #
         if payload.get("restart", True):
             import os  # pylint: disable=C0415
