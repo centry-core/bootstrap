@@ -68,7 +68,7 @@ class Event:  # pylint: disable=R0903,E1101
                 source_target = plugin_info["source"].copy()
                 source_type = source_target.pop("type")
                 #
-                if source_type != "git":
+                if source_type not in ["git", "http_tar", "http_zip"]:
                     log.error("Plugin source type is not supported: %s", source_type)
                     continue
                 #
