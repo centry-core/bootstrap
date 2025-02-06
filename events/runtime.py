@@ -39,6 +39,7 @@ class Event:  # pylint: disable=R0903,E1101
         #
         module_manager = self.context.module_manager
         plugins_provider = module_manager.providers["plugins"]
+        requirements_provider = module_manager.providers["requirements"]
         repo_resolver = self.repo_resolver
         #
         for plugin in payload.get("plugins", []):
@@ -48,6 +49,8 @@ class Event:  # pylint: disable=R0903,E1101
                 #
                 if plugins_provider.plugin_exists(plugin):
                     plugins_provider.delete_plugin(plugin)
+                #
+                requirements_provider.delete_requirements(plugin)
             else:
                 if plugins_provider.plugin_exists(plugin):
                     log.info("Updating plugin: %s", plugin)
