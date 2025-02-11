@@ -64,13 +64,7 @@ class Module(module.ModuleModel):
             self.log_handler.setFormatter(log.state.formatter)
             logging.getLogger("").addHandler(self.log_handler)
         #
-        resolvers = []
-        #
-        for key in ["local_plugin_repo", "customer_plugin_repo", "plugin_repo"]:
-            if key in self.descriptor.config:
-                resolvers.append(self.descriptor.config[key])
-        #
-        self.repo_resolver = RepoResolver(self, resolvers)
+        self.repo_resolver = self._make_resolver()
         self.repo_resolver.init()
         #
         plugins_to_check = [
@@ -124,6 +118,25 @@ class Module(module.ModuleModel):
         #
         self.announcer = RuntimeAnnoucer(self, {})
         self.announcer.start()
+
+    def _make_resolver(self):
+        resolvers = []
+        #
+        for key in ["local_plugin_repo", "customer_plugin_repo", "plugin_repo"]:
+            if key in self.descriptor.config:
+                resolvers.append(self.descriptor.config[key])
+        #
+        return RepoResolver(self, resolvers)
+
+    def reconfig(self):
+        """ Re-config module """
+        log.info("Re-configuring module")
+        #
+        if self.repo_resolver is not None:
+            self.repo_resolver.deinit()
+        #
+        self.repo_resolver = self._make_resolver()
+        self.repo_resolver.init()
 
     def deinit(self):
         """ De-init module """

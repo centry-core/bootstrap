@@ -91,6 +91,12 @@ class Event:  # pylint: disable=R0903,E1101
             if plugin in module_manager.descriptors:
                 descriptor = module_manager.descriptors[plugin]
                 descriptor.load_config()
+                #
+                try:
+                    if descriptor.module is not None:
+                        descriptor.module.reconfig()
+                except:  # pylint: disable=W0702
+                    pass
         #
         for action in payload.get("actions", []):
             if action == "enable_debug_mode":
