@@ -21,7 +21,7 @@ import time
 import threading
 
 from pylon.core.tools import log  # pylint: disable=E0611,E0401
-from pylon.core.tools import config  # pylint: disable=E0611,E0401
+from pylon.core.tools import config as pylon_config  # pylint: disable=E0611,E0401
 
 
 class RuntimeAnnoucer(threading.Thread):  # pylint: disable=R0903
@@ -62,7 +62,7 @@ class RuntimeAnnoucer(threading.Thread):  # pylint: disable=R0903
         result["active"] = self.module.context.settings
         #
         try:
-            result["tunable"] = config.tunable_get("pylon_settings", None).decode()
+            result["tunable"] = pylon_config.tunable_get("pylon_settings", None).decode()
         except:  # pylint: disable=W0702
             result["tunable"] = ""
         #
