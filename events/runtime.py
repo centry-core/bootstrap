@@ -51,6 +51,15 @@ class Event:  # pylint: disable=R0903,E1101
                     plugins_provider.delete_plugin(plugin)
                 #
                 requirements_provider.delete_requirements(plugin)
+                #
+                try:
+                    from pylon.core.tools.module import state  # pylint: disable=E0611,E0401,C0415
+                    #
+                    plugin_state = state.get(plugin)
+                    plugin_state["installed"] = False
+                    state.set(plugin, plugin_state)
+                except:  # pylint: disable=W0702
+                    pass
             else:
                 if plugins_provider.plugin_exists(plugin):
                     log.info("Updating plugin: %s", plugin)
@@ -79,13 +88,22 @@ class Event:  # pylint: disable=R0903,E1101
                 source = source_provider.get_source(source_target)
                 #
                 plugins_provider.add_plugin(plugin, source)
+                #
+                try:
+                    from pylon.core.tools.module import state  # pylint: disable=E0611,E0401,C0415
+                    #
+                    plugin_state = state.get(plugin)
+                    plugin_state["installed"] = False
+                    state.set(plugin, plugin_state)
+                except:  # pylint: disable=W0702
+                    pass
+                #
                 log.info("Plugin updated to version %s", metadata.get("version", "0.0.0"))
         #
         for plugin, config in payload.get("configs", {}).items():
             log.info("Updating config: %s", plugin)
             config_data = config.encode()
             #
-            module_manager = self.context.module_manager
             module_manager.providers["config"].add_config_data(plugin, config_data)
             #
             if plugin in module_manager.descriptors:
@@ -99,6 +117,9 @@ class Event:  # pylint: disable=R0903,E1101
                     pass
         #
         for action in payload.get("actions", []):
+            if not isinstance(action, str):
+                action, data = action
+            #
             if action == "enable_debug_mode":
                 log.info("Enabling debug mode")
                 #
@@ -111,6 +132,7 @@ class Event:  # pylint: disable=R0903,E1101
                     self.log_handler.setFormatter(log.state.formatter)
                     #
                     logging.getLogger("").addHandler(self.log_handler)
+            #
             elif action == "disable_debug_mode":
                 log.info("Disabling debug mode")
                 #
@@ -124,11 +146,17 @@ class Event:  # pylint: disable=R0903,E1101
                     logging.root.setLevel(logging.INFO)
                     #
                     self.log_buffer = []  # pylint: disable=W0201
+            #
+            elif action == "delete_requirements":
+                for plugin in data:
+                    log.info("Deleting requirements: %s", plugin)
+                    #
+                    requirements_provider.delete_requirements(plugin)
         #
         reload_plugins = payload.get("reload", [])
         #
         if reload_plugins:
-            for plugin in self.context.module_manager.load_order:
+            for plugin in module_manager.load_order:
                 if plugin in reload_plugins:
                     log.info("Requesting plugin reload: %s", plugin)
                     #
@@ -137,6 +165,9 @@ class Event:  # pylint: disable=R0903,E1101
             log.info("All reloads done")
         #
         if payload.get("restart", True):
+            #
+            # TODO: wait for running tasks
+            #
             import os  # pylint: disable=C0415
             import subprocess  # pylint: disable=C0415
             #
