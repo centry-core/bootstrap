@@ -152,6 +152,16 @@ class Event:  # pylint: disable=R0903,E1101
                     log.info("Deleting requirements: %s", plugin)
                     #
                     requirements_provider.delete_requirements(plugin)
+            #
+            elif action == "update_pylon_config":
+                log.info("Updating pylon config")
+                #
+                try:
+                    from pylon.core.tools import config  # pylint: disable=E0611,E0401,C0415
+                    #
+                    config.tunable_set("pylon_settings", data)
+                except:  # pylint: disable=W0702
+                    log.exception("Skipping exception")
         #
         reload_plugins = payload.get("reload", [])
         #
