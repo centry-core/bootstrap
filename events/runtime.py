@@ -22,6 +22,7 @@ import logging
 from pylon.core.tools import log, web  # pylint: disable=E0611,E0401
 
 from ..tools.logs import LocalListLogHandler
+from ..tools.tasks import wait_for_tasks
 
 
 class Event:  # pylint: disable=R0903,E1101
@@ -175,8 +176,10 @@ class Event:  # pylint: disable=R0903,E1101
             log.info("All reloads done")
         #
         if payload.get("restart", True):
-            #
-            # TODO: wait for running tasks
+            try:
+                wait_for_tasks(self)
+            except:  # pylint: disable=W0702
+                pass
             #
             import os  # pylint: disable=C0415
             import subprocess  # pylint: disable=C0415
