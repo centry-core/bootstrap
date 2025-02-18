@@ -29,6 +29,7 @@ from .tools.repo import RepoResolver
 from .tools.event import RuntimeAnnoucer
 from .tools.logs import LocalListLogHandler
 from .tools.signal import signal_sigusr2
+from .tools.tasks import wait_for_tasks
 
 
 class Module(module.ModuleModel):
@@ -137,6 +138,13 @@ class Module(module.ModuleModel):
         #
         self.repo_resolver = self._make_resolver()
         self.repo_resolver.init()
+
+    def unready(self):
+        """ Un-ready callback """
+        try:
+            wait_for_tasks(self)
+        except:  # pylint: disable=W0702
+            pass
 
     def deinit(self):
         """ De-init module """
