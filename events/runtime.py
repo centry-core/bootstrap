@@ -43,6 +43,27 @@ class Event:  # pylint: disable=R0903,E1101
         requirements_provider = module_manager.providers["requirements"]
         repo_resolver = self.repo_resolver
         #
+        pycache_path = self.context.settings.get(
+            "modules", {}
+        ).get(
+            "plugins", {}
+        ).get(
+            "pycache", None
+        )
+        #
+        def _delete_pycache():
+            if pycache_path is not None:
+                import os  # pylint: disable=C0415
+                import shutil  # pylint: disable=C0415
+                #
+                try:
+                    if os.path.isdir(pycache_path):
+                        shutil.rmtree(pycache_path)
+                    else:
+                        os.remove(pycache_path)
+                except:  # pylint: disable=W0702
+                    pass
+        #
         for plugin in payload.get("plugins", []):
             if plugin.startswith("!"):
                 plugin = plugin.lstrip("!")
@@ -52,6 +73,8 @@ class Event:  # pylint: disable=R0903,E1101
                     plugins_provider.delete_plugin(plugin)
                 #
                 requirements_provider.delete_requirements(plugin)
+                #
+                _delete_pycache()
                 #
                 try:
                     from pylon.core.tools.module import state  # pylint: disable=E0611,E0401,C0415
@@ -153,6 +176,8 @@ class Event:  # pylint: disable=R0903,E1101
                     log.info("Deleting requirements: %s", plugin)
                     #
                     requirements_provider.delete_requirements(plugin)
+                    #
+                    _delete_pycache()
             #
             elif action == "update_pylon_config":
                 log.info("Updating pylon config")
