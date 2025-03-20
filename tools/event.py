@@ -46,6 +46,7 @@ class RuntimeAnnoucer(threading.Thread):  # pylint: disable=R0903
                 "activated": descriptor.activated,
                 "local_version": descriptor.metadata.get("version", "0.0.0"),
                 "repo_version": "-",
+                "metadata": descriptor.metadata,
                 "config": descriptor.config,
             })
             #
