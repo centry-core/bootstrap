@@ -185,7 +185,9 @@ class Event:  # pylint: disable=R0903,E1101
                 try:
                     from pylon.core.tools import config  # pylint: disable=E0611,E0401,C0415
                     #
-                    config.tunable_set("pylon_settings", data.encode())
+                    encoded_data = data.encode()
+                    config.tunable_set("pylon_settings", encoded_data)
+                    self.context.settings_data = encoded_data
                 except:  # pylint: disable=W0702
                     log.exception("Skipping exception")
         #

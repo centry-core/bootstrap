@@ -63,9 +63,12 @@ class RuntimeAnnoucer(threading.Thread):  # pylint: disable=R0903
         result["active"] = self.module.context.settings
         #
         try:
-            result["tunable"] = pylon_config.tunable_get("pylon_settings", None).decode()
+            result["tunable"] = self.module.context.settings_data.decode()
         except:  # pylint: disable=W0702
-            result["tunable"] = ""
+            try:
+                result["tunable"] = pylon_config.tunable_get("pylon_settings", None).decode()
+            except:  # pylint: disable=W0702
+                result["tunable"] = ""
         #
         return result
 
