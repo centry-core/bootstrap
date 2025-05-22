@@ -28,7 +28,7 @@ class RepoResolver:
 
     def __init__(self, module, repo_config):
         self.module = module
-        self.repo_config = repo_config
+        self.repo_config = self._expand_meta_repos(repo_config)
         #
         self.sub_resolvers = []
         #
@@ -37,6 +37,64 @@ class RepoResolver:
         #
         self.lookup = self._local_lookup
         self.lookup_data = None
+
+    @staticmethod
+    def _expand_meta_repos(repo_config):
+        if not isinstance(repo_config, dict):
+            return repo_config
+        #
+        repo_type = repo_config.get("type", "unknown")
+        #
+        if repo_type == "elitea_github":
+            config = repo_config.copy()
+            #
+            release = config.get("release", "main")
+            license_username = config.get("license_username", None)
+            license_password = config.get("license_password", None)
+            #
+            result = []
+            #
+            result.append({
+                "type": "github",
+                "namespace": "ProjectAlita",
+                "branch": release,
+                "metadata_provider": {
+                    "type": "pylon.core.providers.metadata.http",
+                    "username": license_username,
+                    "password": license_password,
+                },
+                "source_provider": {
+                    "type": "pylon.core.providers.source.git",
+                    "delete_git_dir": False,
+                    "branch": release,
+                    "depth": None,
+                    "username": license_username,
+                    "password": license_password,
+                },
+            })
+            #
+            result.append({
+                "type": "github",
+                "namespace": "centry-core",
+                "branch": release,
+                "metadata_provider": {
+                    "type": "pylon.core.providers.metadata.http",
+                    "username": license_username,
+                    "password": license_password,
+                },
+                "source_provider": {
+                    "type": "pylon.core.providers.source.git",
+                    "delete_git_dir": False,
+                    "branch": release,
+                    "depth": None,
+                    "username": license_username,
+                    "password": license_password,
+                },
+            })
+            #
+            return result
+        #
+        return repo_config
 
     def _local_lookup(self, plugin):
         if self.lookup_data is None:
