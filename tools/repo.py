@@ -51,6 +51,8 @@ class RepoResolver:
             release = config.get("release", "main")
             license_username = config.get("license_username", None)
             license_password = config.get("license_password", None)
+            add_source_data = config.get("add_source_data", False)
+            add_head_data = config.get("add_head_data", False)
             #
             result = []
             #
@@ -66,6 +68,8 @@ class RepoResolver:
                 "source_provider": {
                     "type": "pylon.core.providers.source.git",
                     "delete_git_dir": False,
+                    "add_source_data": add_source_data,
+                    "add_head_data": add_head_data,
                     "branch": release,
                     "depth": None,
                     "username": license_username,
@@ -85,6 +89,8 @@ class RepoResolver:
                 "source_provider": {
                     "type": "pylon.core.providers.source.git",
                     "delete_git_dir": False,
+                    "add_source_data": add_source_data,
+                    "add_head_data": add_head_data,
                     "branch": release,
                     "depth": None,
                     "username": license_username,
