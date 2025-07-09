@@ -34,6 +34,6 @@ def get_plugin_frozen_requirements(plugin_name):  # pylint: disable=R0912,R0914,
         target_site_base=module_descriptor.requirements_base,
     )
     #
-    log.info("Result: %s", frozen_requirements)
+    log.info("Done")
     #
     return frozen_requirements
