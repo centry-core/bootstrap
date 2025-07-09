@@ -22,12 +22,18 @@ from pylon.core.tools import log  # pylint: disable=E0611,E0401,W0611
 
 def get_plugin_frozen_requirements(plugin_name):  # pylint: disable=R0912,R0914,R0915
     """ Mesh """
+    log.info("Starting")
+    #
     from tools import context  # pylint: disable=C0415,E0401
     #
     module_descriptor = context.module_manager.descriptors[plugin_name]
     #
+    log.info("Module %s descriptor: %s", plugin_name, module_descriptor)
+    #
     frozen_requirements = context.module_manager.freeze_site_requirements(
         target_site_base=module_descriptor.requirements_base,
     )
+    #
+    log.info("Result: %s", frozen_requirements)
     #
     return frozen_requirements
