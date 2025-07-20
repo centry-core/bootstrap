@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # coding=utf-8
 
-#   Copyright 2023 getcarrier.io
+#   Copyright 2023-2025 getcarrier.io
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -44,6 +44,39 @@ class RepoResolver:
             return repo_config
         #
         repo_type = repo_config.get("type", "unknown")
+        #
+        if repo_type == "repo_depot":
+            config = repo_config.copy()
+            #
+            release = config.get("release", "main")
+            license_token = config.get("license_token", None)
+            repo_url = config.get("repo_url", "https://repo.elitea.ai")
+            #
+            if license_token is not None:
+                provider_auth = {
+                    "username": license_token,
+                    "password": "",
+                }
+            else:
+                provider_auth = {}
+            #
+            result = []
+            #
+            result.append({
+                "type": "depot",
+                "url": repo_url,
+                "group": release,
+                "metadata_provider": {
+                    "type": "pylon.core.providers.metadata.http",
+                    **provider_auth,
+                },
+                "source_provider": {
+                    "type": "pylon.core.providers.source.http_tar",
+                    **provider_auth,
+                },
+            })
+            #
+            return result
         #
         if repo_type == "elitea_github":
             config = repo_config.copy()
@@ -107,6 +140,31 @@ class RepoResolver:
             return None
         #
         return self.lookup_data.get(plugin, None)
+
+    def _depot_lookup(self, plugin):
+        url = self.repo_config.get("url", None)
+        group = self.repo_config.get("group", None)
+        #
+        if url is None or group is None:
+            return None
+        #
+        url = url.rstrip("/")
+        #
+        metadata_url = f"{url}/depot/{group}/plugins/{plugin}/metadata"
+        try:
+            self.metadata_provider.get_metadata({"source": metadata_url})
+        except:  # pylint: disable=W0702
+            return None
+        #
+        return {
+            "source": {
+                "type": "http_tar",
+                "source": f"{url}/depot/{group}/plugins/{plugin}/source",
+            },
+            "objects": {
+                "metadata": metadata_url
+            }
+        }
 
     def _github_lookup(self, plugin):
         whitelist = self.repo_config.get("whitelist", None)
@@ -195,7 +253,7 @@ class RepoResolver:
             }
         }
 
-    def init(self):
+    def init(self):  # pylint: disable=R0912
         """ Init resolver """
         if isinstance(self.repo_config, list):
             for config in self.repo_config:
@@ -223,6 +281,10 @@ class RepoResolver:
                 return
             log.info("Loading plugin repository from config key")
             self.lookup_data = self.module.descriptor.config[config_key]
+        #
+        elif repo_type == "depot":
+            log.info("Using depot plugin repository")
+            self.lookup = self._depot_lookup
         #
         elif repo_type == "github":
             log.info("Using GitHub plugin repository")
