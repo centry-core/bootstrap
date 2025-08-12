@@ -150,7 +150,7 @@ class RepoResolver:
         #
         url = url.rstrip("/")
         #
-        # Target first
+        # Target
         #
         try:
             metadata_url = f"{url}/depot/{group}/plugins/{plugin}/metadata"
@@ -161,25 +161,6 @@ class RepoResolver:
                 "source": {
                     "type": "http_tar",
                     "source": f"{url}/depot/{group}/plugins/{plugin}/source",
-                },
-                "objects": {
-                    "metadata": metadata_url
-                }
-            }
-        except:  # pylint: disable=W0702
-            pass
-        #
-        # Public second
-        #
-        try:
-            metadata_url = f"{url}/public/depot/{group}/plugins/{plugin}/metadata"
-            #
-            self.metadata_provider.get_metadata({"source": metadata_url})
-            #
-            return {
-                "source": {
-                    "type": "http_tar",
-                    "source": f"{url}/public/depot/{group}/plugins/{plugin}/source",
                 },
                 "objects": {
                     "metadata": metadata_url
