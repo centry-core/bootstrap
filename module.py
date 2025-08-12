@@ -18,12 +18,16 @@
 
 """ Module """
 
+import os
 import signal
+import zipfile
 import logging
+import tempfile
 import threading
 import faulthandler
 
 import arbiter  # pylint: disable=E0401
+import requests  # pylint: disable=E0401
 
 from pylon.core.tools import log  # pylint: disable=E0611,E0401
 from pylon.core.tools import module  # pylint: disable=E0611,E0401
@@ -206,3 +210,80 @@ class Module(module.ModuleModel):  # pylint: disable=R0902
             self.repo_resolver.deinit()
         #
         self._deinit_mesh()
+
+    def get_bundle(self, name, **kwargs):  # pylint: disable=R0912,R0914
+        """ Bundle """
+        session = None
+        #
+        if self.repo_resolver is not None and \
+                self.repo_resolver.repo_config.get("type", "unknown") == "depot":
+            config = self.repo_resolver.repo_config
+            #
+            session = requests.Session()
+            session.headers.update({
+                "User-Agent": "PythonMachineryEliteAClient",
+            })
+            #
+            release = config.get("release", "main")
+            license_token = config.get("license_token", None)
+            repo_url = config.get("repo_url", "https://repo.elitea.ai/target")
+            #
+            repo_url_base = repo_url.rstrip("/")
+            #
+            if license_token is not None:
+                session.headers.update({
+                    "Authorization": f"Bearer {license_token}",
+                })
+            else:
+                repo_url_base = f"{repo_url_base}/public"
+        #
+        if session is None:
+            raise RuntimeError("RepoResolver is not for depot")
+        #
+        target_url = f"{repo_url_base}/depot/{release}/bundles/{name}/data"
+        #
+        processing = kwargs.get("processing", None)
+        #
+        if processing == "zip_extract" and "extract_target" in kwargs:
+            extract_target = kwargs["extract_target"]
+            extract_cleanup = kwargs.get("extract_cleanup", False)
+            extract_cleanup_skip_files = kwargs.get("extract_cleanup_skip_files", [])
+            extract_cleanup_skip_dirs = kwargs.get("extract_cleanup_skip_dirs", [])
+            #
+            with tempfile.TemporaryFile() as temp_file:
+                with session.get(target_url, stream=True) as response:
+                    response.raise_for_status()
+                    #
+                    for chunk in response.iter_content(chunk_size=8192):
+                        temp_file.write(chunk)
+                #
+                temp_file.seek(0)
+                #
+                with zipfile.ZipFile(temp_file) as zip_file:
+                    if extract_cleanup:
+                        for root, dirs, files in os.walk(extract_target, topdown=False):
+                            for file_name in files:
+                                if file_name in extract_cleanup_skip_files:
+                                    continue
+                                #
+                                try:
+                                    os.remove(os.path.join(root, file_name))
+                                except:  # pylint: disable=W0702
+                                    log.exception("Failed to remove file: %s, skipping", file_name)
+                            #
+                            for dir_name in dirs:
+                                if dir_name in extract_cleanup_skip_dirs:
+                                    continue
+                                #
+                                try:
+                                    os.rmdir(os.path.join(root, dir_name))
+                                except:  # pylint: disable=W0702
+                                    log.exception("Failed to remove dir: %s, skipping", dir_name)
+                    #
+                    zip_file.extractall(extract_target)
+            #
+            log.info("Bundle ZIP extracted: %s -> %s", name, extract_target)
+            #
+            return
+        #
+        raise RuntimeError("Unknown processing type")
