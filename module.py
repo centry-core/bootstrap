@@ -222,7 +222,7 @@ class Module(module.ModuleModel):  # pylint: disable=R0902
             while isinstance(config, list):
                 config = config[0]
             #
-            if config.get("type", "unknown") == "depot":
+            if config.get("type", "unknown") == "repo_depot":
                 session = requests.Session()
                 session.headers.update({
                     "User-Agent": "PythonMachineryEliteAClient",
