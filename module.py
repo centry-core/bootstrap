@@ -214,33 +214,37 @@ class Module(module.ModuleModel):  # pylint: disable=R0902
     def get_bundle(self, name, **kwargs):  # pylint: disable=R0912,R0914
         """ Bundle """
         session = None
+        target_url = None
         #
-        if self.repo_resolver is not None and \
-                self.repo_resolver.repo_config.get("type", "unknown") == "depot":
+        if self.repo_resolver is not None:
             config = self.repo_resolver.repo_config
             #
-            session = requests.Session()
-            session.headers.update({
-                "User-Agent": "PythonMachineryEliteAClient",
-            })
+            if isinstance(config, list):
+                config = config[0]
             #
-            release = config.get("release", "main")
-            license_token = config.get("license_token", None)
-            repo_url = config.get("repo_url", "https://repo.elitea.ai/target")
-            #
-            repo_url_base = repo_url.rstrip("/")
-            #
-            if license_token is not None:
+            if config.get("type", "unknown") == "depot":
+                session = requests.Session()
                 session.headers.update({
-                    "Authorization": f"Bearer {license_token}",
+                    "User-Agent": "PythonMachineryEliteAClient",
                 })
-            else:
-                repo_url_base = f"{repo_url_base}/public"
+                #
+                release = config.get("release", "main")
+                license_token = config.get("license_token", None)
+                repo_url = config.get("repo_url", "https://repo.elitea.ai/target")
+                #
+                repo_url_base = repo_url.rstrip("/")
+                #
+                if license_token is not None:
+                    session.headers.update({
+                        "Authorization": f"Bearer {license_token}",
+                    })
+                else:
+                    repo_url_base = f"{repo_url_base}/public"
+                #
+                target_url = f"{repo_url_base}/depot/{release}/bundles/{name}/data"
         #
         if session is None:
             raise RuntimeError("RepoResolver is not for depot")
-        #
-        target_url = f"{repo_url_base}/depot/{release}/bundles/{name}/data"
         #
         processing = kwargs.get("processing", None)
         #
