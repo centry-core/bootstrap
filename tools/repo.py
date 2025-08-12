@@ -92,7 +92,7 @@ class RepoResolver:
                     "requirements.extra_index_url": None,
                     "requirements.no_index": False,
                     "requirements.find_links": None,
-                    "requirements.require_hashes": True,
+                    "requirements.require_hashes": False,
                     "requirements.trusted_hosts": [],
                 }
                 #
