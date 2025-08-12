@@ -50,7 +50,7 @@ class RepoResolver:
             #
             release = config.get("release", "main")
             license_token = config.get("license_token", None)
-            repo_url = config.get("repo_url", "https://repo.elitea.ai")
+            repo_url = config.get("repo_url", "https://repo.elitea.ai/target")
             #
             if license_token is not None:
                 provider_auth = {
@@ -150,21 +150,47 @@ class RepoResolver:
         #
         url = url.rstrip("/")
         #
-        metadata_url = f"{url}/depot/{group}/plugins/{plugin}/metadata"
-        try:
-            self.metadata_provider.get_metadata({"source": metadata_url})
-        except:  # pylint: disable=W0702
-            return None
+        # Target first
         #
-        return {
-            "source": {
-                "type": "http_tar",
-                "source": f"{url}/depot/{group}/plugins/{plugin}/source",
-            },
-            "objects": {
-                "metadata": metadata_url
+        try:
+            metadata_url = f"{url}/depot/{group}/plugins/{plugin}/metadata"
+            #
+            self.metadata_provider.get_metadata({"source": metadata_url})
+            #
+            return {
+                "source": {
+                    "type": "http_tar",
+                    "source": f"{url}/depot/{group}/plugins/{plugin}/source",
+                },
+                "objects": {
+                    "metadata": metadata_url
+                }
             }
-        }
+        except:  # pylint: disable=W0702
+            pass
+        #
+        # Public second
+        #
+        try:
+            metadata_url = f"{url}/public/depot/{group}/plugins/{plugin}/metadata"
+            #
+            self.metadata_provider.get_metadata({"source": metadata_url})
+            #
+            return {
+                "source": {
+                    "type": "http_tar",
+                    "source": f"{url}/public/depot/{group}/plugins/{plugin}/source",
+                },
+                "objects": {
+                    "metadata": metadata_url
+                }
+            }
+        except:  # pylint: disable=W0702
+            pass
+        #
+        # Not found
+        #
+        return None
 
     def _github_lookup(self, plugin):
         whitelist = self.repo_config.get("whitelist", None)
