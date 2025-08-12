@@ -38,8 +38,7 @@ class RepoResolver:
         self.lookup = self._local_lookup
         self.lookup_data = None
 
-    @staticmethod
-    def _expand_meta_repos(repo_config):
+    def _expand_meta_repos(self, repo_config):  # pylint: disable=R0914
         if not isinstance(repo_config, dict):
             return repo_config
         #
@@ -52,19 +51,23 @@ class RepoResolver:
             license_token = config.get("license_token", None)
             repo_url = config.get("repo_url", "https://repo.elitea.ai/target")
             #
+            repo_url_base = repo_url.rstrip("/")
+            #
             if license_token is not None:
+                depot_url = repo_url
                 provider_auth = {
                     "username": license_token,
                     "password": "",
                 }
             else:
+                depot_url = f"{repo_url_base}/public"
                 provider_auth = {}
             #
             result = []
             #
             result.append({
                 "type": "depot",
-                "url": repo_url,
+                "url": depot_url,
                 "group": release,
                 "metadata_provider": {
                     "type": "pylon.core.providers.metadata.http",
@@ -75,6 +78,26 @@ class RepoResolver:
                     **provider_auth,
                 },
             })
+            #
+            if hasattr(self.module.context.module_manager, "setting_overrides"):
+                if license_token is not None:
+                    repo_url_base = repo_url_base.replace("://", f"://{license_token}@")
+                else:
+                    repo_url_base = f"{repo_url_base}/public"
+                #
+                index_url = f"{repo_url_base}/simple/{release}/"
+                #
+                setting_overrides = {
+                    "requirements.index_url": index_url,
+                    "requirements.extra_index_url": None,
+                    "requirements.no_index": False,
+                    "requirements.find_links": None,
+                    "requirements.require_hashes": True,
+                    "requirements.trusted_hosts": [],
+                }
+                #
+                for o_key, o_value in setting_overrides.items():
+                    self.module.context.module_manager.setting_overrides[o_key] = o_value
             #
             return result
         #
