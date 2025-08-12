@@ -219,7 +219,7 @@ class Module(module.ModuleModel):  # pylint: disable=R0902
         if self.repo_resolver is not None:
             config = self.repo_resolver.repo_config
             #
-            if isinstance(config, list):
+            while isinstance(config, list):
                 config = config[0]
             #
             if config.get("type", "unknown") == "depot":
