@@ -93,7 +93,6 @@ class RepoResolver:
                     "requirements.no_index": False,
                     "requirements.find_links": None,
                     "requirements.require_hashes": False,
-                    "requirements.trusted_hosts": [],
                 }
                 #
                 for o_key, o_value in setting_overrides.items():
