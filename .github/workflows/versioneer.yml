@@ -9,7 +9,7 @@ on:
 
 jobs:
   call-reusable-workflow:
-    uses: projectalita/actions/.github/workflows/versioneer.yml@main
+    uses: centry-core/actions/.github/workflows/versioneer.yml@main
     with:
       metadata_file: "metadata.json"
       version_key: ".version"
