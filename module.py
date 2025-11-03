@@ -247,6 +247,22 @@ class Module(module.ModuleModel):  # pylint: disable=R0902
         if session is None:
             raise RuntimeError("RepoResolver is not for depot")
         #
+        install_needed_callback = kwargs.get("install_needed", None)
+        update_needed_callback = kwargs.get("update_needed", None)
+        #
+        install_needed = True  # by default assume we need to install the bundle
+        update_needed = False  # by default assume we do not need to update the bundle
+        #
+        if install_needed_callback is not None:
+            install_needed = install_needed_callback(name, **kwargs)
+        #
+        if update_needed_callback is not None:
+            update_needed = update_needed_callback(name, **kwargs)
+        #
+        if not install_needed and not update_needed:
+            log.info("Bundle installation or update is not needed: %s", name)
+            return
+        #
         processing = kwargs.get("processing", None)
         #
         if processing == "zip_extract" and "extract_target" in kwargs:
