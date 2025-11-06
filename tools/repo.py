@@ -282,6 +282,37 @@ class RepoResolver:
             }
         }
 
+    def _gogs_lookup(self, plugin):
+        whitelist = self.repo_config.get("whitelist", None)
+        if whitelist is not None and plugin not in whitelist:
+            return None
+        #
+        base_url = self.repo_config.get("base_url", None)
+        branch = self.repo_config.get("branch", "main")
+        file = self.repo_config.get("metadata_file", "metadata.json")
+        #
+        if base_url is None:
+            return None
+        #
+        base_url = base_url.rstrip("/")
+        #
+        metadata_url = f"{base_url}/{plugin}/raw/{branch}/{file}"
+        try:
+            self.metadata_provider.get_metadata({"source": metadata_url})
+        except:  # pylint: disable=W0702
+            return None
+        #
+        return {
+            "source": {
+                "type": "git",
+                "source": f"{base_url}/{plugin}.git",
+                "branch": branch
+            },
+            "objects": {
+                "metadata": metadata_url
+            }
+        }
+
     def init(self):  # pylint: disable=R0912
         """ Init resolver """
         if isinstance(self.repo_config, list):
@@ -326,6 +357,10 @@ class RepoResolver:
         elif repo_type == "github_tar":
             log.info("Using GitHub[tar] plugin repository")
             self.lookup = self._github_tar_lookup
+        #
+        elif repo_type == "gogs":
+            log.info("Using Gogs plugin repository")
+            self.lookup = self._gogs_lookup
         #
         else:
             return
