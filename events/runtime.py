@@ -19,7 +19,7 @@
 
 import logging
 
-from pylon.core.tools import log, web  # pylint: disable=E0611,E0401
+from pylon.core.tools import log, web, profiling  # pylint: disable=E0611,E0401
 
 from ..tools.logs import LocalListLogHandler
 from ..tools.tasks import wait_for_tasks
@@ -170,6 +170,22 @@ class Event:  # pylint: disable=R0903,E1101
                     logging.root.setLevel(logging.INFO)
                     #
                     self.log_buffer = []  # pylint: disable=W0201
+            #
+            elif action == "enable_profiling":
+                log.info("Enabling profiling")
+                #
+                if "stage" not in self.context.profiling:
+                    self.context.profiling["stage"] = {}
+                #
+                self.context.profiling["stage"]["ondemand"] = True
+                profiling.profiling_start(self.context, "ondemand")
+            #
+            elif action == "disable_profiling":
+                log.info("Disabling profiling")
+                #
+                if self.context.profiling.get("stage", {}).get("ondemand", False):
+                    profiling.profiling_stop(self.context, "ondemand")
+                    self.context.profiling["stage"]["ondemand"] = False
             #
             elif action == "delete_requirements":
                 for plugin in data:
