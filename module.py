@@ -59,6 +59,60 @@ class Module(module.ModuleModel):  # pylint: disable=R0902
         self.stop_event = threading.Event()
         self.announcer = None
 
+    def preload(self):
+        """ Preload handler """
+        self.repo_resolver = self._make_resolver()
+        self.repo_resolver.init()
+        #
+        plugins_to_check = [
+            *self.descriptor.config.get("local_preordered_plugins", []),
+            *self.descriptor.config.get("customer_preordered_plugins", []),
+            *self.descriptor.config.get("preordered_plugins", [])
+        ]
+        #
+        known_plugins = set(plugins_to_check)
+        plugins_provider = self.context.module_manager.providers["plugins"]
+        #
+        while plugins_to_check:
+            plugin = plugins_to_check.pop(0)
+            log.info("Preloading plugin: %s", plugin)
+            #
+            if plugins_provider.plugin_exists(plugin):
+                log.info("Plugin %s already exists", plugin)
+                #
+                metadata = plugins_provider.get_plugin_metadata(plugin)
+            else:
+                plugin_info = self.repo_resolver.resolve(plugin)
+                if plugin_info is None:
+                    log.error("Plugin %s is not known", plugin)
+                    continue
+                #
+                metadata_provider = self.repo_resolver.get_metadata_provider(plugin)
+                #
+                metadata_url = plugin_info["objects"]["metadata"]
+                metadata = metadata_provider.get_metadata({"source": metadata_url})
+                #
+                source_target = plugin_info["source"].copy()
+                source_type = source_target.pop("type")
+                #
+                if source_type not in  ["git", "http_tar", "http_zip"]:
+                    log.error("Plugin %s source type %s is not supported", plugin, source_type)
+                    continue
+                #
+                source_provider = self.repo_resolver.get_source_provider(plugin)
+                #
+                source = source_provider.get_source(source_target)
+                plugins_provider.add_plugin(plugin, source)
+            #
+            for dependency in metadata.get("depends_on", []):
+                if dependency in known_plugins:
+                    continue
+                #
+                known_plugins.add(dependency)
+                plugins_to_check.append(dependency)
+        #
+        self.repo_resolver.deinit()
+
     def init(self):  # pylint: disable=R0914
         """ Init module """
         log.info("Initializing module")
