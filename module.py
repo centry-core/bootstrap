@@ -110,8 +110,6 @@ class Module(module.ModuleModel):  # pylint: disable=R0902
                 #
                 known_plugins.add(dependency)
                 plugins_to_check.append(dependency)
-        #
-        self.repo_resolver.deinit()
 
     def init(self):  # pylint: disable=R0914
         """ Init module """
