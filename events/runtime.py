@@ -187,6 +187,30 @@ class Event:  # pylint: disable=R0903,E1101
                     profiling.profiling_stop(self.context, "ondemand")
                     self.context.profiling["stage"]["ondemand"] = False
             #
+            elif action == "enable_splash":
+                log.info("Enabling maintenance splash")
+                #
+                if self.context.web_runtime == "gevent":
+                    from ..tools.splash import maintenance_splash_hook  # pylint: disable=C0415
+                    #
+                    try:
+                        if maintenance_splash_hook not in self.context.root_router.hooks:
+                            self.context.root_router.hooks.append(maintenance_splash_hook)
+                    except:  # pylint: disable=W0702
+                        log.exception("Skipping exception")
+            #
+            elif action == "disable_splash":
+                log.info("Disabling maintenance splash")
+                #
+                if self.context.web_runtime == "gevent":
+                    from ..tools.splash import maintenance_splash_hook  # pylint: disable=C0415
+                    #
+                    try:
+                        if maintenance_splash_hook in self.context.root_router.hooks:
+                            self.context.root_router.hooks.remove(maintenance_splash_hook)
+                    except:  # pylint: disable=W0702
+                        log.exception("Skipping exception")
+            #
             elif action == "delete_requirements":
                 for plugin in data:
                     log.info("Deleting requirements: %s", plugin)
