@@ -32,6 +32,11 @@ def maintenance_splash_hook(_router, environ, _start_response):
     source_uri = req.full_path
     if not req.query_string and source_uri.endswith("?"):
         source_uri = source_uri[:-1]
+    #
+    for endpoint in ["/healthz", "/livez", "/readyz"]:
+        if source_uri.startswith(endpoint):
+            return None
+    #
     source_uri = f'{context.url_prefix}{source_uri}'
     #
     source = {
