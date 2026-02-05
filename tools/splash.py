@@ -20,8 +20,9 @@
 import flask  # pylint: disable=E0401
 
 from pylon.core.tools.context import Context as Holder  # pylint: disable=E0611,E0401
+from pylon.core.tools import config  # pylint: disable=E0611,E0401,W0611
 
-from tools import context, this, config  # pylint: disable=E0401
+from tools import context, this  # pylint: disable=E0401
 
 
 def maintenance_splash_hook(router, environ, _start_response):  # pylint: disable=R0912
