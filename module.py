@@ -129,6 +129,18 @@ class Module(module.ModuleModel):  # pylint: disable=R0902
             self.log_handler.setFormatter(log.state.formatter)
             logging.getLogger("").addHandler(self.log_handler)
         #
+        if self.descriptor.state.get("splash_enabled", False):
+            log.info("Re-enabling maintenance splash")
+            #
+            if self.context.web_runtime == "gevent":
+                from .tools.splash import maintenance_splash_hook  # pylint: disable=C0415
+                #
+                try:
+                    if maintenance_splash_hook not in self.context.root_router.hooks:
+                        self.context.root_router.hooks.append(maintenance_splash_hook)
+                except:  # pylint: disable=W0702
+                    log.exception("Skipping exception")
+        #
         self._init_mesh(self.descriptor.config.get("mesh", {}))
         #
         self.repo_resolver = self._make_resolver()

@@ -190,6 +190,12 @@ class Event:  # pylint: disable=R0903,E1101
             elif action == "enable_splash":
                 log.info("Enabling maintenance splash")
                 #
+                try:
+                    self.descriptor.state["splash_enabled"] = True
+                    self.descriptor.save_state()
+                except:  # pylint: disable=W0702
+                    log.exception("Skipping state exception")
+                #
                 if self.context.web_runtime == "gevent":
                     from ..tools.splash import maintenance_splash_hook  # pylint: disable=C0415
                     #
@@ -201,6 +207,12 @@ class Event:  # pylint: disable=R0903,E1101
             #
             elif action == "disable_splash":
                 log.info("Disabling maintenance splash")
+                #
+                try:
+                    self.descriptor.state["splash_enabled"] = False
+                    self.descriptor.save_state()
+                except:  # pylint: disable=W0702
+                    log.exception("Skipping state exception")
                 #
                 if self.context.web_runtime == "gevent":
                     from ..tools.splash import maintenance_splash_hook  # pylint: disable=C0415
