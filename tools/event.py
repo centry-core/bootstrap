@@ -17,6 +17,8 @@
 
 """ Event """
 
+import os
+import json
 import time
 import threading
 
@@ -52,6 +54,14 @@ class RuntimeAnnoucer(threading.Thread):  # pylint: disable=R0903
             #
             try:
                 result[-1]["config_data"] = descriptor.config_data.decode()
+            except:  # pylint: disable=W0702
+                pass
+            #
+            try:
+                schema_path = os.path.join(descriptor.path, "admin_schema.json")
+                if os.path.isfile(schema_path):
+                    with open(schema_path, "r", encoding="utf-8") as f:
+                        result[-1]["admin_schema"] = json.load(f)
             except:  # pylint: disable=W0702
                 pass
         #
