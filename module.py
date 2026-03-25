@@ -19,6 +19,7 @@
 """ Module """
 
 import os
+import time
 import signal
 import zipfile
 import tarfile
@@ -197,6 +198,24 @@ class Module(module.ModuleModel):  # pylint: disable=R0902
         #
         self.announcer = RuntimeAnnoucer(self, {})
         self.announcer.start()
+        #
+        autocreate_dbs = self.descriptor.config.get("autocreate_dbs", {})
+        if isinstance(autocreate_dbs, dict) and autocreate_dbs.get("enabled", False):
+            db_url = autocreate_dbs.get("db_url", None)
+            use_managed_identity = autocreate_dbs.get("use_managed_identity", False)
+            #
+            if db_url is None:
+                log.error("DB URL is not provided for autocreate_dbs, skipping DB auto-creation")
+                return
+            #
+            for db_name in autocreate_dbs.get("db_names", []):
+                self.ensure_db(
+                    db_url=db_url,
+                    db_name=db_name,
+                    use_managed_identity=use_managed_identity,
+                    mute_first_failed_connections=5,
+                    connection_retry_interval=5.0,
+                )
 
     def _init_mesh(self, mesh_config):
         if "event_node" not in mesh_config:
@@ -414,3 +433,68 @@ class Module(module.ModuleModel):  # pylint: disable=R0902
             return
         #
         raise RuntimeError("Unknown processing type")
+
+    def ensure_db(
+            self,
+            db_url,
+            db_name,
+            use_managed_identity=False,
+            mute_first_failed_connections=0,
+            connection_retry_interval=3.0,
+            max_failed_connections=None,
+            log_errors=True,
+        ):  # pylint: disable=R0912,R0914,R0915
+        """ Create DB if not exists and return True (if created) """
+        log.info("Ensuring DB exists: %s", db_name)
+        #
+        import sqlalchemy  # pylint: disable=C0415,E0401
+        #
+        db_engine = sqlalchemy.create_engine(
+            db_url,
+            isolation_level="AUTOCOMMIT",
+        )
+        #
+        if use_managed_identity:
+            from sqlalchemy import event  # pylint: disable=E0401,C0415
+            from azure.identity import DefaultAzureCredential  # pylint: disable=E0401,C0415
+            #
+            @event.listens_for(db_engine, "do_connect")
+            def _get_managed_token(dialect, conn_rec, cargs, cparams):  # pylint: disable=W0613
+                credential = DefaultAzureCredential()
+                token = credential.get_token("https://ossrdbms-aad.database.windows.net/.default").token
+                cparams["password"] = token
+        #
+        failed_connections = 0
+        #
+        while True:
+            try:
+                connection = db_engine.connect()
+                connection.close()
+                #
+                break
+            except:  # pylint: disable=W0702
+                if log_errors and \
+                        failed_connections >= mute_first_failed_connections:
+                    #
+                    log.exception(
+                        "Failed to create DB connection. Retrying in %s seconds",
+                        connection_retry_interval,
+                    )
+                #
+                failed_connections += 1
+                #
+                if max_failed_connections and failed_connections > max_failed_connections:
+                    break
+                #
+                time.sleep(connection_retry_interval)
+        #
+        with db_engine.connect() as connection:
+            try:
+                connection.execute(
+                    sqlalchemy.text(f"CREATE DATABASE {db_name}")
+                )
+                log.info("DB created: %s", db_name)
+                return True
+            except:  # pylint: disable=W0702
+                log.info("DB already exists (or failed to create): %s", db_name)
+                return False
