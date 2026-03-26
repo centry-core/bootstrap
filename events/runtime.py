@@ -260,12 +260,20 @@ class Event:  # pylint: disable=R0903,E1101
             except:  # pylint: disable=W0702
                 pass
             #
-            import os  # pylint: disable=C0415
-            import subprocess  # pylint: disable=C0415
-            #
-            pylon_pid = payload.get("pylon_pid", os.getpid())
-            #
-            log.info("Restarting pylon (pid = %s)", pylon_pid)
-            subprocess.Popen(  # pylint: disable=R1732
-                    ["/bin/bash", "-c", f"bash -c 'sleep 1; kill {pylon_pid}' &"]
-            )
+            try:
+                from pylon.core.tools.server import restart
+            except:  # pylint: disable=W0702
+                log.exception("Failed to import server restart, using bootstrap fallback")
+                #
+                import os  # pylint: disable=C0415
+                import subprocess  # pylint: disable=C0415
+                #
+                pylon_pid = payload.get("pylon_pid", os.getpid())
+                #
+                log.info("Restarting pylon (pid = %s)", pylon_pid)
+                subprocess.Popen(  # pylint: disable=R1732
+                        ["/bin/bash", "-c", f"bash -c 'sleep 1; kill {pylon_pid}' &"]
+                )
+            else:
+                log.info("Restarting via server restart")
+                restart()
